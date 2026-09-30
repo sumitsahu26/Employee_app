@@ -21,7 +21,15 @@ export class Employee {
   designationList: iDesignation[] = [];
   filteredDesignationList:iDesignation[] = [];
   editId: number | null = null;
-  showModal = false
+  showModal = false;
+  nameError = '';
+  emailError = '';
+  phoneError = '';
+  genderError = '';
+  dateError = '';
+  departmentError = '';
+  designationError = '';
+  
 
   // form fields
   fullName = '';
@@ -78,6 +86,43 @@ export class Employee {
   }
 
   saveEmployee() {
+    this.nameError = '';
+    this.emailError = '';
+    this.phoneError = '';
+    this.genderError = '';
+    this.dateError = '';
+    this.departmentError = '';
+    this.designationError = '';
+
+    if (!this.fullName) {
+      this.nameError = 'Full Name is required';
+      return;
+    }
+    if (!this.email) {
+      this.emailError = 'Email is required';
+      return;
+    }
+    if (!this.phone) {
+      this.phoneError = 'Phone is required';
+      return;
+    }
+    if (!this.gender) {
+      this.genderError = 'Department is required';
+      return;
+    }
+    if (!this.departmentId) {
+      this.departmentError = 'Department is required';
+      return;
+    }
+    if (!this.designationId) {
+      this.designationError = 'Designation is required';
+      return;
+    }
+    if (!this.dateOfJoining) {
+      this.dateError = 'Date of Joining is required';
+      return;
+    }
+
     const newEmp: iEmployee = {
       fullName: this.fullName,
       email: this.email,

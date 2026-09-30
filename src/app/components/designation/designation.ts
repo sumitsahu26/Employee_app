@@ -23,6 +23,8 @@ export class Designation {
   status : string = 'Active';
   editId: number | null = null;
   showModal = false;
+  departmentError = '';
+  designationNameError = '';
   
   constructor() {
     this.getDepartments();
@@ -47,6 +49,17 @@ export class Designation {
   }
   
   saveDesignation(){
+    this.departmentError = '';
+    this.designationNameError = ''
+
+    if (!this.departmentId) {
+      this.departmentError = 'Department is required';
+      return;
+    }
+    if (!this.designationName || !this.designationName.trim()) {
+      this.designationNameError = 'Designation Name is required';
+      return;
+    }
     if(this.editId) {
       const updateDept: iDesignation = {
         id: this.editId,

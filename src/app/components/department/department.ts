@@ -21,6 +21,7 @@ depName : string = '';
 status : string = 'Active';
 editId: number | null = null;
 showModal = false;
+errorMessage = '';
 
 constructor() {
   this.getDepartments();
@@ -33,6 +34,14 @@ getDepartments() {
 }
 
 saveDepartment(){
+
+  this.errorMessage = '';
+
+  if (!this.depName || !this.depName.trim()) {
+    this.errorMessage = 'Department Name is required';
+    return;
+  }
+
   if(this.editId) {
     const updateDept: iDepartment = {
       id: this.editId,
@@ -80,6 +89,7 @@ this.showModal = true;
 }
 onCancel() {
 this.showModal = false;
+this.errorMessage = ""
 this.resetForm();
 }
 
