@@ -1,0 +1,260 @@
+<div class="pt-20 p-6 space-y-6 min-h-screen">
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">
+    Designation Management
+  </h1>
+
+  <div class="flex gap-6 flex-col md:flex-row">
+
+    <!-- Designation List -->
+    <div class="w-full md:w-3/4 p-4 shadow-md sm:rounded-lg bg-white dark:bg-gray-800">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+          Designation List
+        </h2>
+
+        <!-- Add button (only visible on mobile) -->
+        <button
+          type="button"
+          (click)="onAdd()"
+          class="md:hidden text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          + Add Department
+        </button>
+      </div>
+
+      <div
+        class="relative overflow-x-auto max-h-[500px] overflow-y-auto shadow-md sm:rounded-lg mt-6"
+      >
+        <table class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
+          <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 sticky top-0 z-10">
+            <tr>
+              <th scope="col" class="px-4 py-2">SN</th>
+              <th scope="col" class="px-4 py-2">Department Name</th>
+              <th scope="col" class="px-4 py-2">Designation Name</th>
+              <th scope="col" class="px-4 py-2">Status</th>
+              <th scope="col" class="px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of designationList; track $index) {
+
+            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-4 py-2">
+                {{ $index + 1 }}
+              </td>
+              <td class="px-4 py-2">
+                {{ item.departmentName }}
+              </td>
+              <td class="px-4 py-2 font-small text-gray-900 whitespace-nowrap dark:text-white">
+                {{ item.designationName }}
+              </td>
+              <td class="px-4 py-2">
+                {{ item.status }}
+              </td>
+              <td class="px-4 py-2">
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    (click)="onEdit(item)"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm w-full sm:w-auto px-2 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    (click)="onDelete(item.id)"
+                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-sm text-sm w-full sm:w-auto px-2 py-1 text-center dark:bg-red-600 dark:hover:red-blue-700 dark:focus:ring-red-800"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            } @if (designationList.length === 0) {
+            <tr>
+              <td colspan="5" class="px-6 py-4 text-center text-gray-400">
+                No Designation available
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+     <!-- Static Designation Form (only visible on md+ screens) -->
+    <div class="hidden md:block w-full md:w-1/4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+      <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
+        {{ editId ? 'Edit Designation' : 'Add Designation' }}
+      </h2>
+
+      <form class="space-y-5 max-w-sm" (submit)="saveDesignation()">
+        <div>
+          <label for="deptName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Select Department</label
+          >
+          <select
+            type="text"
+            id="departmentId"
+            [(ngModel)]="departmentId"
+            name="departmentId"
+            placeholder="Select Department"
+            required
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="" disabled selected>Select Department</option>
+            @for (item of departmentList; track $index) {
+            <option [value]="item.id">{{ item.depName }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="deptName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Designation Name</label
+          >
+          <input
+            type="text"
+            id="designationName"
+            [(ngModel)]="designationName"
+            name="designationName"
+            required
+            placeholder="Enter Designation"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            for="deptStatus"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Status</label
+          >
+          <select
+            id="deptStatus"
+            [(ngModel)]="status"
+            name="status"
+            required
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button
+            type="submit"
+            class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            {{ editId ? 'Update Designation' : 'Add Designation' }}
+          </button>
+          <button
+            type="button"
+            (click)="resetForm()"
+            class="flex-1 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- Department Modal (only for mobile) -->
+  @if (showModal) {
+    <div
+      class="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-opacity-50 z-50 md:hidden"
+    >
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-11/12 max-w-md relative"
+      >
+        <!-- Header with Close Button -->
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            {{ editId ? "Edit Department" : "Add Department" }}
+          </h2>
+          <button
+            type="button"
+            (click)="onCancel()"
+            class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+          >
+            ✕
+          </button>
+        </div>
+  
+        <!-- Inject Department Form -->
+        <ng-container *ngTemplateOutlet="departmentForm"></ng-container>
+      </div>
+    </div>
+  }
+  
+  <!-- 🔽 Designation Form Template -->
+  <ng-template #departmentForm>
+    <form class="space-y-4" (submit)="saveDesignation()">
+
+      <div>
+        <label for="deptName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Select Department</label
+        >
+        <select
+          type="text"
+          id="departmentId"
+          [(ngModel)]="departmentId"
+          name="departmentId"
+          placeholder="Select Department"
+          required
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="" disabled selected>Select Department</option>
+          @for (item of departmentList; track $index) {
+          <option [value]="item.id">{{ item.depName }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label for="deptName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Designation Name</label
+        >
+        <input
+          type="text"
+          id="designationName"
+          [(ngModel)]="designationName"
+          name="designationName"
+          required
+          placeholder="Enter Designation"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      <div>
+        <label
+          for="deptStatus"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Status</label
+        >
+        <select
+          id="deptStatus"
+          [(ngModel)]="status"
+          name="status"
+          required
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button
+          type="submit"
+          class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          {{ editId ? 'Update Designation' : 'Add Designation' }}
+        </button>
+        <button
+          type="button"
+          (click)="resetForm()"
+          class="flex-1 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </ng-template>

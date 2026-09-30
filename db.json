@@ -1,0 +1,98 @@
+{
+  "departments": [
+    {
+      "id": "59c7",
+      "depName": "Floor",
+      "status": "Active"
+    },
+    {
+      "id": "88b4",
+      "depName": "Kitchen",
+      "status": "Active"
+    }
+  ],
+  "designations": [
+    {
+      "id": "abc0",
+      "departmentId": "59c7",
+      "designationName": "Manager",
+      "status": "Active"
+    },
+    {
+      "id": "88c0",
+      "departmentId": "59c7",
+      "designationName": "Waiter",
+      "status": "Active"
+    },
+    {
+      "id": "dd50",
+      "departmentId": "59c7",
+      "designationName": "Helper",
+      "status": "Active"
+    },
+    {
+      "id": "0f87",
+      "departmentId": "88b4",
+      "designationName": "Chef",
+      "status": "Active"
+    },
+    {
+      "id": "2915",
+      "departmentId": "88b4",
+      "designationName": "Helper",
+      "status": "Active"
+    }
+  ],
+  "employees": [
+    {
+      "fullName": "Neeruj Chouhan",
+      "email": "neeruj@gmail.com",
+      "phone": "6266610472",
+      "gender": "Male",
+      "dateOfJoining": "2026-07-01",
+      "departmentId": "59c7",
+      "designationId": "abc0",
+      "employeeType": "Permanent",
+      "salary": "15000",
+      "id": "e4dc"
+    },
+    {
+      "fullName": "Jeevan Singh",
+      "email": "jeevan@gmail.com",
+      "phone": "987654321",
+      "gender": "Male",
+      "dateOfJoining": "2026-07-01",
+      "departmentId": "88b4",
+      "designationId": "0f87",
+      "employeeType": "Permanent",
+      "salary": "30000",
+      "id": "151c"
+    }
+  ],
+  "employeeSalary": [
+    {
+      "id": "dfe6",
+      "employeeId": "e4dc",
+      "month": "2026-07",
+      "salary": 15000
+    },
+    {
+      "id": "8792",
+      "employeeId": "e4dc",
+      "month": "2026-08",
+      "salary": 15000
+    },
+    {
+      "id": "e046",
+      "employeeId": "151c",
+      "month": "2026-07",
+      "salary": 30000
+    },
+    {
+      "id": "af95",
+      "employeeId": "151c",
+      "month": "2026-08",
+      "salary": 30000
+    }
+  ]
+}
