@@ -651,6 +651,546 @@
       "inTime": "09:30",
       "outTime": "18:30",
       "remark": ""
+    },
+    {
+      "id": "att061",
+      "employeeId": "c452",
+      "date": "2026-09-01",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att062",
+      "employeeId": "c452",
+      "date": "2026-09-02",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att063",
+      "employeeId": "c452",
+      "date": "2026-09-03",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att064",
+      "employeeId": "c452",
+      "date": "2026-09-04",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att065",
+      "employeeId": "c452",
+      "date": "2026-09-05",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att066",
+      "employeeId": "c452",
+      "date": "2026-09-06",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att067",
+      "employeeId": "c452",
+      "date": "2026-09-07",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att068",
+      "employeeId": "c452",
+      "date": "2026-09-08",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att069",
+      "employeeId": "c452",
+      "date": "2026-09-09",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att070",
+      "employeeId": "c452",
+      "date": "2026-09-10",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att071",
+      "employeeId": "c452",
+      "date": "2026-09-11",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att072",
+      "employeeId": "c452",
+      "date": "2026-09-12",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att073",
+      "employeeId": "c452",
+      "date": "2026-09-13",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att074",
+      "employeeId": "c452",
+      "date": "2026-09-14",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att075",
+      "employeeId": "c452",
+      "date": "2026-09-15",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att076",
+      "employeeId": "c452",
+      "date": "2026-09-16",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att077",
+      "employeeId": "c452",
+      "date": "2026-09-17",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att078",
+      "employeeId": "c452",
+      "date": "2026-09-18",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att079",
+      "employeeId": "c452",
+      "date": "2026-09-19",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att080",
+      "employeeId": "c452",
+      "date": "2026-09-20",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att081",
+      "employeeId": "c452",
+      "date": "2026-09-21",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att082",
+      "employeeId": "c452",
+      "date": "2026-09-22",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att083",
+      "employeeId": "c452",
+      "date": "2026-09-23",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att084",
+      "employeeId": "c452",
+      "date": "2026-09-24",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att085",
+      "employeeId": "c452",
+      "date": "2026-09-25",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att086",
+      "employeeId": "c452",
+      "date": "2026-09-26",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att087",
+      "employeeId": "c452",
+      "date": "2026-09-27",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att088",
+      "employeeId": "c452",
+      "date": "2026-09-28",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att089",
+      "employeeId": "c452",
+      "date": "2026-09-29",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att090",
+      "employeeId": "c452",
+      "date": "2026-09-30",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att091",
+      "employeeId": "0e56",
+      "date": "2026-09-01",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att092",
+      "employeeId": "0e56",
+      "date": "2026-09-02",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att093",
+      "employeeId": "0e56",
+      "date": "2026-09-03",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att094",
+      "employeeId": "0e56",
+      "date": "2026-09-04",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att095",
+      "employeeId": "0e56",
+      "date": "2026-09-05",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att096",
+      "employeeId": "0e56",
+      "date": "2026-09-06",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att097",
+      "employeeId": "0e56",
+      "date": "2026-09-07",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att098",
+      "employeeId": "0e56",
+      "date": "2026-09-08",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att099",
+      "employeeId": "0e56",
+      "date": "2026-09-09",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att100",
+      "employeeId": "0e56",
+      "date": "2026-09-10",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att101",
+      "employeeId": "0e56",
+      "date": "2026-09-11",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att102",
+      "employeeId": "0e56",
+      "date": "2026-09-12",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att103",
+      "employeeId": "0e56",
+      "date": "2026-09-13",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att104",
+      "employeeId": "0e56",
+      "date": "2026-09-14",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att105",
+      "employeeId": "0e56",
+      "date": "2026-09-15",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att106",
+      "employeeId": "0e56",
+      "date": "2026-09-16",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att107",
+      "employeeId": "0e56",
+      "date": "2026-09-17",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att108",
+      "employeeId": "0e56",
+      "date": "2026-09-18",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att109",
+      "employeeId": "0e56",
+      "date": "2026-09-19",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att110",
+      "employeeId": "0e56",
+      "date": "2026-09-20",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att111",
+      "employeeId": "0e56",
+      "date": "2026-09-21",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att112",
+      "employeeId": "0e56",
+      "date": "2026-09-22",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att113",
+      "employeeId": "0e56",
+      "date": "2026-09-23",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att114",
+      "employeeId": "0e56",
+      "date": "2026-09-24",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att115",
+      "employeeId": "0e56",
+      "date": "2026-09-25",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att116",
+      "employeeId": "0e56",
+      "date": "2026-09-26",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att117",
+      "employeeId": "0e56",
+      "date": "2026-09-27",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att118",
+      "employeeId": "0e56",
+      "date": "2026-09-28",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att119",
+      "employeeId": "0e56",
+      "date": "2026-09-29",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att120",
+      "employeeId": "0e56",
+      "date": "2026-09-30",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
     }
   ],
   "employeeSalary": [
@@ -665,6 +1205,12 @@
       "employeeId": "5a34",
       "month": "2026-09",
       "salary": 9250
+    },
+    {
+      "id": "b4e2",
+      "employeeId": "4ea7",
+      "month": "2026-09",
+      "salary": 14000
     }
   ],
   "employeeSalarySettlement": [
@@ -742,13 +1288,13 @@
       "status": "Active"
     },
     {
-      "id": "2670",
-      "employeeId": "5a34",
-      "referenceId": "13b7",
-      "date": "2026-09-27",
+      "id": "c345",
+      "employeeId": "4ea7",
+      "referenceId": "b4e2",
+      "date": "2026-09-29",
       "transactionType": "SALARY_PAYMENT",
       "debit": 0,
-      "credit": 9250,
+      "credit": 14000,
       "description": "Salary Payment",
       "status": "Active"
     }

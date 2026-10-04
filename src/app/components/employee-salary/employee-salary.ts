@@ -237,11 +237,17 @@ export class EmployeeSalary {
   
       this.http.post<any>(this.salaryApiUrl, newSalary).subscribe({
         next: (res) => {
+
+          const [year, month] = this.month.split('-').map(Number);
+
+          const lastDay = new Date(year, month, 0)
+            .toISOString()
+            .split('T')[0];
       
           const ledgerData = {
             employeeId: this.employeeId,
             referenceId: res.id,
-            date: new Date().toISOString().split('T')[0],
+            date: lastDay,
             transactionType: 'SALARY_PAYMENT',
             debit: 0,
             credit: this.salary,

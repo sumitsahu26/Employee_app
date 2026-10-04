@@ -153,222 +153,228 @@ export class SalaryReport {
 
   createSalaryReport() {
 
-    this.salaryList = this.employeeList.map(employee => {
+    this.salaryList = this.employeeList
+      .map(employee => {
   
-      const employeeId = employee.id;
+        const employeeId = employee.id;
   
-      // --------------------------------
-      // Employee Ledger
-      // --------------------------------
+        // --------------------------------
+        // Employee Ledger
+        // --------------------------------
   
-      const employeeLedger =
-        this.ledgerList.filter(
-          item =>
-            String(item.employeeId) ===
-            String(employeeId)
-        );
-  
-  
-      // --------------------------------
-      // Find Salary Month
-      // --------------------------------
-  
-      let salaryMonth = '-';
-  
-      const salaryLedger =
-        employeeLedger.find(
-          item =>
-            item.transactionType === 'SALARY_PAYMENT'
-        );
-  
-      if (salaryLedger) {
-  
-        const employeeSalary =
-          this.employeeSalaryList.find(
-            salary =>
-              String(salary.id) ===
-              String(salaryLedger.referenceId)
+        const employeeLedger =
+          this.ledgerList.filter(
+            item =>
+              String(item.employeeId) ===
+              String(employeeId)
           );
   
-        if (employeeSalary) {
   
-          salaryMonth =
-            employeeSalary.month || '-';
+        // --------------------------------
+        // Check Transaction
+        // --------------------------------
   
+        const salaryTransactions =
+          employeeLedger.filter(
+            item =>
+              item.transactionType === 'SALARY_PAYMENT' ||
+              item.transactionType === 'ADVANCE'
+          );
+  
+  
+        // No transaction
+        // Do not show employee
+        if (salaryTransactions.length === 0) {
+          return null;
         }
   
-      }
+  
+        // --------------------------------
+        // Find Salary Month
+        // --------------------------------
+  
+        let salaryMonth = '-';
+  
+        if (salaryTransactions.length > 0) {
+  
+          const latestTransaction =
+            salaryTransactions.sort(
+              (a, b) =>
+                new Date(b.date).getTime() -
+                new Date(a.date).getTime()
+            )[0];
+  
+          if (latestTransaction?.date) {
+            salaryMonth =
+              latestTransaction.date.substring(0, 7);
+          }
+        }
   
   
-      // --------------------------------
-      // Attendance
-      // --------------------------------
+        // --------------------------------
+        // Attendance
+        // --------------------------------
   
-      const employeeAttendance =
-        this.attendanceList?.filter(
-          item =>
-            String(item.employeeId) ===
-            String(employeeId)
-        ) || [];
-  
-  
-      const presentDays =
-        employeeAttendance.filter(
-          item => item.status === 'Present'
-        ).length;
+        const employeeAttendance =
+          this.attendanceList?.filter(
+            item =>
+              String(item.employeeId) ===
+              String(employeeId)
+          ) || [];
   
   
-      const absentDays =
-        employeeAttendance.filter(
-          item => item.status === 'Absent'
-        ).length;
+        const presentDays =
+          employeeAttendance.filter(
+            item => item.status === 'Present'
+          ).length;
   
   
-      const halfDays =
-        employeeAttendance.filter(
-          item => item.status === 'Half Day'
-        ).length;
+        const absentDays =
+          employeeAttendance.filter(
+            item => item.status === 'Absent'
+          ).length;
   
   
-      const leaveDays =
-        employeeAttendance.filter(
-          item => item.status === 'Leave'
-        ).length;
+        const halfDays =
+          employeeAttendance.filter(
+            item => item.status === 'Half Day'
+          ).length;
   
   
-      // --------------------------------
-      // Salary
-      // --------------------------------
-  
-      const monthlySalary =
-        Number(employee.salary || 0);
+        const leaveDays =
+          employeeAttendance.filter(
+            item => item.status === 'Leave'
+          ).length;
   
   
-      const totalDays = 30;
+        // --------------------------------
+        // Salary
+        // --------------------------------
+  
+        const monthlySalary =
+          Number(employee.salary || 0);
+  
+        const totalDays = 30;
+  
+        const dailySalary =
+          Number(
+            (monthlySalary / totalDays).toFixed(2)
+          );
   
   
-      const dailySalary =
-        monthlySalary / totalDays;
+        // --------------------------------
+        // Attendance Deduction
+        // --------------------------------
+  
+        const absentDeduction =
+          absentDays * dailySalary;
+  
+        const halfDayDeduction =
+          halfDays * (dailySalary / 2);
+  
+        const leaveDeduction =
+          leaveDays * dailySalary;
+  
+        const attendanceDeduction =
+          absentDeduction +
+          halfDayDeduction +
+          leaveDeduction;
   
   
-      // --------------------------------
-      // Attendance Deduction
-      // --------------------------------
+        // --------------------------------
+        // Advance
+        // --------------------------------
   
-      const absentDeduction =
-        absentDays * dailySalary;
+        const advances =
+          employeeLedger.filter(
+            item =>
+              item.transactionType === 'ADVANCE'
+          );
   
-  
-      const halfDayDeduction =
-        halfDays * (dailySalary / 2);
-  
-  
-      const leaveDeduction =
-        leaveDays * dailySalary;
-  
-  
-      const attendanceDeduction =
-        absentDeduction +
-        halfDayDeduction +
-        leaveDeduction;
+        const totalAdvance =
+          advances.reduce(
+            (total, item) =>
+              total + Number(item.debit || 0),
+            0
+          );
   
   
-      // --------------------------------
-      // Advance
-      // --------------------------------
+        // --------------------------------
+        // Salary Already Paid
+        // --------------------------------
   
-      const advances =
-        employeeLedger.filter(
-          item =>
-            item.transactionType === 'ADVANCE'
-        );
+        const payments =
+          employeeLedger.filter(
+            item =>
+              item.transactionType === 'SALARY_PAYMENT'
+          );
   
-  
-      const totalAdvance =
-        advances.reduce(
-          (total, item) =>
-            total + Number(item.debit || 0),
-          0
-        );
-  
-  
-      // --------------------------------
-      // Salary Already Paid
-      // --------------------------------
-  
-      const payments =
-        employeeLedger.filter(
-          item =>
-            item.transactionType === 'SALARY_PAYMENT'
-        );
+        const totalPaid =
+          payments.reduce(
+            (total, item) =>
+              total + Number(item.credit || 0),
+            0
+          );
   
   
-      const totalPaid =
-        payments.reduce(
-          (total, item) =>
-            total + Number(item.credit || 0),
-          0
-        );
+        // --------------------------------
+        // Remaining Salary
+        // --------------------------------
+  
+        const salaryAfterAttendance =
+          monthlySalary -
+          attendanceDeduction;
+  
+        const remainingSalary =
+          salaryAfterAttendance -
+          totalAdvance -
+          totalPaid;
   
   
-      // --------------------------------
-      // Remaining Salary
-      // --------------------------------
+        // --------------------------------
+        // Report Object
+        // --------------------------------
   
-      const salaryAfterAttendance =
-        monthlySalary -
-        attendanceDeduction;
+        return {
   
+          employeeId,
   
-      const remainingSalary =
-        salaryAfterAttendance -
-        totalAdvance -
-        totalPaid;
+          employeeName:
+            employee.fullName || '-',
   
+          salaryMonth,
   
-      // --------------------------------
-      // Report Object
-      // --------------------------------
+          monthlySalary,
   
-      return {
+          totalDays,
   
-        employeeId,
+          presentDays,
   
-        employeeName:
-          employee.fullName || '-',
+          absentDays,
   
-        salaryMonth,
+          halfDays,
   
-        monthlySalary,
+          leaveDays,
   
-        totalDays,
+          dailySalary,
   
-        presentDays,
+          attendanceDeduction,
   
-        absentDays,
+          advance:
+            totalAdvance,
   
-        halfDays,
+          paidSalary:
+            totalPaid,
   
-        leaveDays,
+          remainingSalary:
+            remainingSalary > 0
+              ? remainingSalary
+              : 0
   
-        dailySalary,
+        };
   
-        attendanceDeduction,
-  
-        advance:
-          totalAdvance,
-  
-        paidSalary:
-          totalPaid,
-  
-        remainingSalary:
-          remainingSalary > 0
-            ? remainingSalary
-            : 0
-  
-      };
-  
-    });
+      })
+      .filter(item => item !== null);
   
   
     this.filteredSalaryList = [
