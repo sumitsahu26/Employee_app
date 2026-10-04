@@ -1,0 +1,174 @@
+<div class="pt-20 p-6 min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- Header -->
+
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Attendance Report</h1>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Employee attendance report</p>
+    </div>
+
+    <a
+      routerLink="/reports"
+      class="px-4 py-2 rounded-lg bg-gray-700 text-white text-sm hover:bg-gray-800"
+    >
+      ← Back to Reports
+    </a>
+  </div>
+
+  <!-- Filters -->
+
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 mb-6">
+
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+  
+      <!-- Left: Filters -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+  
+        <!-- Search -->
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="filterAttendance()"
+          placeholder="Search employee..."
+          class="border border-gray-300 px-3 py-2 rounded-lg text-sm
+                 bg-gray-50 text-gray-900
+                 dark:bg-gray-700 dark:text-white"
+        />
+  
+        <!-- Employee -->
+        <select
+          [(ngModel)]="filterEmployeeId"
+          (change)="filterAttendance()"
+          class="border border-gray-300 px-3 py-2 rounded-lg text-sm
+                 bg-gray-50 text-gray-900
+                 dark:bg-gray-700 dark:text-white"
+        >
+          <option [ngValue]="null">All Employees</option>
+  
+          @for (emp of employeeList; track emp.id) {
+            <option [ngValue]="emp.id">
+              {{ emp.fullName }}
+            </option>
+          }
+        </select>
+  
+        <!-- Date -->
+        <input
+          type="date"
+          [(ngModel)]="filterDate"
+          (change)="filterAttendance()"
+          class="border border-gray-300 px-3 py-2 rounded-lg text-sm
+                 bg-gray-50 text-gray-900
+                 dark:bg-gray-700 dark:text-white"
+        />
+  
+        <!-- Clear -->
+        <button
+          type="button"
+          (click)="clearFilters()"
+          class="cursor-pointer px-4 py-2 rounded-lg
+                 bg-gray-700 text-white text-sm
+                 hover:bg-gray-800"
+        >
+          Clear
+        </button>
+  
+      </div>
+  
+  
+      <!-- Right: Excel Download -->
+      <div class="w-full lg:w-auto">
+        <button
+          type="button"
+          (click)="downloadExcel()"
+          class="cursor-pointer w-full lg:w-auto
+                 px-4 py-2 rounded-lg
+                 bg-green-600 text-white text-sm
+                 hover:bg-green-700"
+        >
+          Excel Download
+        </button>
+      </div>
+  
+    </div>
+  
+  </div>
+
+  <!-- Table -->
+
+  <div class="relative rounded-xl shadow-md sm:rounded-lg overflow-x-auto max-h-[500px] overflow-y-auto">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
+        <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 sticky top-0 z-10">
+          <tr>
+            <th class="px-4 py-3">SN</th>
+            <th class="px-4 py-3">Employee</th>
+            <th class="px-4 py-3">Date</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3">In Time</th>
+            <th class="px-4 py-3">Out Time</th>
+            <th class="px-4 py-3">Remark</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for ( item of filteredAttendanceList; track item.id; let i = $index ) {
+
+          <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-4 py-3">
+              {{ i + 1 }}
+            </td>
+
+            <td class="px-4 py-3 font-medium">
+              {{ item.employeeName }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.date }}
+            </td>
+
+            <td class="px-4 py-3">
+              <span
+                class="px-2 py-1 rounded-full text-xs"
+                [ngClass]="{
+                  'bg-green-100 text-green-700': item.status === 'Present',
+
+                  'bg-red-100 text-red-700': item.status === 'Absent',
+
+                  'bg-yellow-100 text-yellow-700': item.status === 'Half Day',
+
+                  'bg-blue-100 text-blue-700': item.status === 'Leave'
+                }"
+              >
+                {{ item.status }}
+              </span>
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.inTime || '-' }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.outTime || '-' }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.remark || '-' }}
+            </td>
+          </tr>
+
+          } @if (filteredAttendanceList.length === 0) {
+
+          <tr>
+            <td colspan="7" class="px-4 py-8 text-center text-gray-400">
+              No attendance records found
+            </td>
+          </tr>
+
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

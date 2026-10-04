@@ -1,0 +1,65 @@
+
+<div class="pt-20 p-6 min-h-screen bg-gray-50 dark:bg-gray-900">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
+        Reports
+      </h1>
+  
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        Generate and view different employee management reports
+      </p>
+    </div>
+  
+  
+    <!-- Reports Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  
+      @for (report of reports; track report.title) {
+  
+        <div
+          class="bg-white dark:bg-gray-800 rounded-xl shadow-sm
+                 border border-gray-200 dark:border-gray-700
+                 p-6 hover:shadow-lg transition duration-200"
+        >
+  
+          <!-- Icon -->
+          <div
+            class="w-12 h-12 rounded-xl flex items-center justify-center
+                   text-2xl text-white mb-5"
+            [ngClass]="report.iconBg"
+          >
+            {{ report.icon }}
+          </div>
+  
+          <!-- Title -->
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-white">
+            {{ report.title }}
+          </h2>
+  
+          <!-- Description -->
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 min-h-[48px]">
+            {{ report.description }}
+          </p>
+  
+          <!-- Button -->
+          <a
+            [routerLink]="report.route"
+            class="inline-flex items-center mt-5 px-4 py-2
+                   rounded-lg text-sm font-medium
+                   text-white bg-gray-800 hover:bg-gray-900
+                   dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            View Report
+  
+            <span class="ml-2">→</span>
+          </a>
+  
+        </div>
+  
+      }
+  
+    </div>
+  
+  </div>

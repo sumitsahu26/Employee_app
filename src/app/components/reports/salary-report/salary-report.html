@@ -1,0 +1,155 @@
+<div class="pt-20 p-6 min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Salary Report</h1>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        Employee salary and payment report
+      </p>
+    </div>
+
+    <a
+      routerLink="/reports"
+      class="px-4 py-2 rounded-lg bg-gray-700 text-white text-sm hover:bg-gray-800"
+    >
+      ← Back to Reports
+    </a>
+  </div>
+
+  <!-- Filters -->
+
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 mb-6">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <!-- Left: Filters -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <!-- Employee Search -->
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="filterSalary()"
+          placeholder="Search employee..."
+          class="w-full sm:w-80 border border-gray-300 px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
+        />
+
+        <!-- Salary Month -->
+        <input
+          type="month"
+          [(ngModel)]="filterMonth"
+          (change)="filterSalary()"
+          class="w-full sm:w-52 border border-gray-300 px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
+        />
+
+        <!-- Clear -->
+        <button
+          type="button"
+          (click)="clearFilters()"
+          class="cursor-pointer px-4 py-2 rounded-lg bg-gray-700 text-white text-sm hover:bg-gray-800"
+        >
+          Clear
+        </button>
+      </div>
+
+      <!-- Right: Excel Download -->
+      <div class="w-full lg:w-auto">
+        <button
+          type="button"
+          (click)="downloadExcel()"
+          class="cursor-pointer w-full lg:w-auto px-4 py-2 rounded-lg bg-green-600 text-white text-sm hover:bg-green-700"
+        >
+          Excel Download
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+
+  <div class="relative rounded-xl shadow-md sm:rounded-lg overflow-x-auto max-h-[500px] overflow-y-auto">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
+        <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 sticky top-0 z-10">
+          <tr>
+            <th class="px-4 py-3">SN</th>
+            <th class="px-4 py-3">Employee</th>
+            <th class="px-4 py-3">Salary Month</th>
+            <th class="px-4 py-3">Salary</th>
+            <th class="px-4 py-3">Total Days</th>
+            <th class="px-4 py-3">Total Present</th>
+            <th class="px-4 py-3">Total Absent</th>
+            <th class="px-4 py-3">Total Half Days</th>
+            <th class="px-4 py-3">Total Leaves</th>
+            <th class="px-4 py-3">Daily Salary</th>
+            <th class="px-4 py-3">Attendance Deduction</th>
+            <th class="px-4 py-3">Advance</th>
+            <th class="px-4 py-3">Paid Salary</th>
+            <th class="px-4 py-3">Remaining</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for ( item of filteredSalaryList; track item.employeeId; let i = $index ) {
+
+          <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-4 py-3">
+              {{ i + 1 }}
+            </td>
+
+            <td class="px-4 py-3 font-medium">
+              {{ item.employeeName }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ getSalaryMonthName(item.salaryMonth) }}
+            </td>
+
+            <td class="px-4 py-3">₹{{ item.monthlySalary }}</td>
+
+            <td class="px-4 py-3">
+              {{ item.totalDays }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.presentDays }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.absentDays }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.halfDays }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.leaveDays }}
+            </td>
+
+            <td class="px-4 py-3">
+              {{ item.dailySalary }}
+            </td>
+
+            <td class="px-4 py-3 text-orange-600">
+              {{ item.attendanceDeduction }}
+            </td>
+
+            <td class="px-4 py-3 text-orange-600">₹{{ item.advance }}</td>
+
+            <td class="px-4 py-3 text-green-600">₹{{ item.paidSalary }}</td>
+
+            <td class="px-4 py-3 font-semibold">₹{{ item.remainingSalary }}</td>
+          </tr>
+
+          } @if (filteredSalaryList.length === 0) {
+
+          <tr>
+            <td colspan="14" class="px-4 py-8 text-center text-gray-400">
+              No salary records found
+            </td>
+          </tr>
+
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

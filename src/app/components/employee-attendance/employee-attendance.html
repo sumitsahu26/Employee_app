@@ -1,0 +1,319 @@
+<div class="pt-20 p-6 space-y-6 min-h-screen">
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Employee Attendance</h1>
+
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Attendance Table -->
+    <div class="w-full md:w-3/4 p-4 shadow-md rounded-lg bg-white dark:bg-gray-800">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+          Employee Attendance Records
+        </h2>
+
+        <button
+          type="button"
+          (click)="onAdd()"
+          class="md:hidden text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          + Add Attendance
+        </button>
+      </div>
+
+      <!-- Employee Filter -->
+      <div class="mb-4 flex flex-col sm:flex-row gap-3">
+        <!-- Search -->
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          name="searchText"
+          (input)="filterAttendance()"
+          placeholder="Search employee..."
+          class="w-full sm:w-64 border px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
+        />
+
+        <!-- Employee Filter -->
+        <select
+          [(ngModel)]="filterEmployeeId"
+          name="filterEmployeeId"
+          (change)="filterAttendance()"
+          class="w-full sm:w-64 border px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
+        >
+          <option [ngValue]="null">All Employees</option>
+
+          @for (emp of employeeList; track emp.id) {
+          <option [ngValue]="emp.id">
+            {{ emp.fullName }}
+          </option>
+          }
+        </select>
+
+        <!-- Date Filter -->
+        <input
+          type="date"
+          [(ngModel)]="filterDate"
+          name="filterDate"
+          (change)="filterAttendance()"
+          class="w-full sm:w-52 border px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
+        />
+
+        <!-- Clear Filters -->
+        <button
+          type="button"
+          (click)="clearFilters()"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-gray-600 hover:bg-gray-700"
+        >
+          Clear
+        </button>
+      </div>
+
+      <!-- Table -->
+      <div
+        class="relative overflow-x-auto max-h-[500px] overflow-y-auto shadow-md sm:rounded-lg mt-6"
+      >
+        <table class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
+          <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 sticky top-0 z-10">
+            <tr>
+              <th class="px-4 py-2">SN</th>
+              <th class="px-4 py-2">Employee</th>
+              <th class="px-4 py-2">Date</th>
+              <th class="px-4 py-2">Status</th>
+              <th class="px-4 py-2">In Time</th>
+              <th class="px-4 py-2">Out Time</th>
+              <th class="px-4 py-2">Remark</th>
+              <th class="px-4 py-2 text-center">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (item of filteredAttendanceList; track $index) {
+
+            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-4 py-2">
+                {{ $index + 1 }}
+              </td>
+
+              <td class="px-4 py-2">
+                {{ item.employeeName }}
+              </td>
+
+              <td class="px-4 py-2">
+                {{ item.date }}
+              </td>
+
+              <td class="px-4 py-2">
+                {{ item.status }}
+              </td>
+
+              <td class="px-4 py-2">
+                {{ item.inTime }}
+              </td>
+
+              <td class="px-4 py-2">
+                {{ item.outTime }}
+              </td>
+
+              <td class="px-4 py-2">
+                {{ item.remark }}
+              </td>
+
+              <td class="px-4 py-2 text-center">
+                <div class="flex gap-2 justify-center">
+                  <button (click)="onEdit(item)" class="px-2 py-1 bg-blue-600 text-white rounded">
+                    Edit
+                  </button>
+
+                  <button
+                    (click)="onDelete(item.id)"
+                    class="px-2 py-1 bg-red-600 text-white rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            } @if (filteredAttendanceList.length === 0) {
+            <tr>
+              <td colspan="8" class="px-4 py-6 text-center text-gray-400">No attendance records</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Attendance Form -->
+    <div class="hidden md:block w-full md:w-1/4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+      <ng-container *ngTemplateOutlet="attendanceForm"></ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Attendance Modal - Mobile -->
+@if (showModal) {
+
+<div
+  class="fixed inset-0 flex items-center justify-center backdrop-blur-xs bg-opacity-50 z-50 md:hidden"
+>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-11/12 max-w-md relative">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">Attendance</h2>
+
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Attendance Form -->
+    <ng-container *ngTemplateOutlet="attendanceForm"></ng-container>
+  </div>
+</div>
+
+}
+
+<!-- Attendance Form Template -->
+<ng-template #attendanceForm>
+  <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
+    {{ editId ? 'Edit Attendance' : 'Add Attendance' }}
+  </h2>
+
+  <form class="space-y-2 max-w-sm" (submit)="saveAttendance()">
+    <!-- Employee -->
+    <div>
+      <div class="flex items-center gap-1">
+        <label class="block mb-1 text-sm font-medium"> Employee </label>
+
+        <sup class="text-red-500">*</sup>
+      </div>
+
+      <select
+        [(ngModel)]="employeeId"
+        name="employeeId"
+        required
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+      >
+        <option value="" disabled>Select Employee</option>
+
+        @for (emp of employeeList; track emp.id) {
+
+        <option [value]="emp.id">
+          {{ emp.fullName }}
+        </option>
+
+        }
+      </select>
+    </div>
+
+    <!-- Attendance Date -->
+    <div>
+      <div class="flex items-center gap-1">
+        <label class="block mb-1 text-sm font-medium"> Attendance Date </label>
+
+        <sup class="text-red-500">*</sup>
+      </div>
+
+      <input
+        type="date"
+        [(ngModel)]="date"
+        name="date"
+        required
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+      />
+    </div>
+
+    <!-- Status -->
+    <div>
+      <div class="flex items-center gap-1">
+        <label class="block mb-1 text-sm font-medium"> Status </label>
+
+        <sup class="text-red-500">*</sup>
+      </div>
+
+      <select
+        [(ngModel)]="status"
+        name="status"
+        required
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+      >
+        <option value="Present">Present</option>
+
+        <option value="Absent">Absent</option>
+
+        <option value="Half Day">Half Day</option>
+
+        <option value="Leave">Leave</option>
+      </select>
+    </div>
+
+    <!-- In Time -->
+    <div>
+      <div class="flex items-center gap-1">
+        <label class="block mb-1 text-sm font-medium"> In Time </label>
+
+        <sup class="text-red-500">*</sup>
+      </div>
+
+      <input
+        type="time"
+        [(ngModel)]="inTime"
+        name="inTime"
+        required
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+      />
+    </div>
+
+    <!-- Out Time -->
+    <div>
+      <div class="flex items-center gap-1">
+        <label class="block mb-1 text-sm font-medium"> Out Time </label>
+
+        <sup class="text-red-500">*</sup>
+      </div>
+
+      <input
+        type="time"
+        [(ngModel)]="outTime"
+        name="outTime"
+        required
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+      />
+    </div>
+
+    <!-- Remark -->
+    <div>
+      <div class="flex items-center gap-1">
+        <label class="block mb-1 text-sm font-medium"> Remark </label>
+      </div>
+
+      <input
+        type="text"
+        [(ngModel)]="remark"
+        name="remark"
+        placeholder="Enter remark"
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+      />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex gap-3 pt-2">
+      <button
+        type="submit"
+        class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
+      >
+        {{ editId ? 'Update Attendance' : 'Add Attendance' }}
+      </button>
+
+      <button
+        type="button"
+        (click)="resetForm()"
+        class="flex-1 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-sm font-medium"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</ng-template>

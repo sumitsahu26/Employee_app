@@ -45,7 +45,7 @@ export class Employee {
 
   constructor() {
     this.getDepartments();
-    this.getDesignations()
+    this.getDesignations(); 
   }
 
   getEmployees() {
@@ -71,7 +71,6 @@ export class Employee {
   }
 
   getDesignationsByDepartmentId() {
-    console.log(this.designationList)
     this.filteredDesignationList = this.designationList.filter(
       des => des.departmentId === this.departmentId
     );

@@ -36,4 +36,16 @@ export interface iEmployee {
     employeeName: string;
     employeeSalary: string;
   }
+
+  export interface iSalarySettle {
+    id?: number;
+    employeeId: number;
+    date: string;
+    salary: number;
+    paymentType: string;
+    payment: number;
+    remark:string;
+    employeeName: string;
+    employeeSalary: string;
+  }
   

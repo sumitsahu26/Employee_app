@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 import { iDepartment, iDesignation, iEmployee } from '../../app.model';
 
@@ -7,7 +8,7 @@ Chart.register(...registerables);
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

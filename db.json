@@ -1,98 +1,720 @@
 {
   "departments": [
     {
-      "id": "59c7",
+      "id": "d634",
       "depName": "Floor",
       "status": "Active"
     },
     {
-      "id": "88b4",
+      "id": "84f9",
       "depName": "Kitchen",
       "status": "Active"
     }
   ],
   "designations": [
     {
-      "id": "abc0",
-      "departmentId": "59c7",
+      "id": "e1ae",
+      "departmentId": "d634",
       "designationName": "Manager",
       "status": "Active"
     },
     {
-      "id": "88c0",
-      "departmentId": "59c7",
+      "id": "59e1",
+      "departmentId": "d634",
       "designationName": "Waiter",
       "status": "Active"
     },
     {
-      "id": "dd50",
-      "departmentId": "59c7",
+      "id": "9f56",
+      "departmentId": "d634",
+      "designationName": "House Keeping",
+      "status": "Active"
+    },
+    {
+      "id": "cb5c",
+      "departmentId": "d634",
       "designationName": "Helper",
       "status": "Active"
     },
     {
-      "id": "0f87",
-      "departmentId": "88b4",
+      "id": "96ad",
+      "departmentId": "84f9",
+      "designationName": "Head Chef",
+      "status": "Active"
+    },
+    {
+      "id": "e6c2",
+      "departmentId": "84f9",
       "designationName": "Chef",
-      "status": "Active"
-    },
-    {
-      "id": "2915",
-      "departmentId": "88b4",
-      "designationName": "Helper",
       "status": "Active"
     }
   ],
   "employees": [
     {
-      "fullName": "Neeruj Chouhan",
-      "email": "neeruj@gmail.com",
-      "phone": "6266610472",
-      "gender": "Male",
-      "dateOfJoining": "2026-07-01",
-      "departmentId": "59c7",
-      "designationId": "abc0",
-      "employeeType": "Permanent",
-      "salary": "15000",
-      "id": "e4dc"
-    },
-    {
       "fullName": "Jeevan Singh",
-      "email": "jeevan@gmail.com",
+      "email": "jeevansingh@gmail.com",
       "phone": "987654321",
       "gender": "Male",
-      "dateOfJoining": "2026-07-01",
-      "departmentId": "88b4",
-      "designationId": "0f87",
+      "dateOfJoining": "2026-01-01",
+      "departmentId": "84f9",
+      "designationId": "96ad",
       "employeeType": "Permanent",
       "salary": "30000",
-      "id": "151c"
+      "id": "3a2f"
+    },
+    {
+      "id": "5a34",
+      "fullName": " Neeraj Chouhan",
+      "email": "neeraj@gmail.com",
+      "phone": "987654321",
+      "gender": "Male",
+      "dateOfJoining": "2026-01-01",
+      "departmentId": "d634",
+      "designationId": "e1ae",
+      "employeeType": "Permanent",
+      "salary": "15000"
+    }
+  ],
+  "employeeAttendance": [
+    {
+      "id": "att001",
+      "employeeId": "3a2f",
+      "date": "2026-09-01",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att002",
+      "employeeId": "3a2f",
+      "date": "2026-09-02",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att003",
+      "employeeId": "3a2f",
+      "date": "2026-09-03",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att004",
+      "employeeId": "3a2f",
+      "date": "2026-09-04",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att005",
+      "employeeId": "3a2f",
+      "date": "2026-09-05",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att006",
+      "employeeId": "3a2f",
+      "date": "2026-09-06",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att007",
+      "employeeId": "3a2f",
+      "date": "2026-09-07",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att008",
+      "employeeId": "3a2f",
+      "date": "2026-09-08",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att009",
+      "employeeId": "3a2f",
+      "date": "2026-09-09",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att010",
+      "employeeId": "3a2f",
+      "date": "2026-09-10",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att011",
+      "employeeId": "3a2f",
+      "date": "2026-09-11",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att012",
+      "employeeId": "3a2f",
+      "date": "2026-09-12",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att013",
+      "employeeId": "3a2f",
+      "date": "2026-09-13",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att014",
+      "employeeId": "3a2f",
+      "date": "2026-09-14",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att015",
+      "employeeId": "3a2f",
+      "date": "2026-09-15",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att016",
+      "employeeId": "3a2f",
+      "date": "2026-09-16",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att017",
+      "employeeId": "3a2f",
+      "date": "2026-09-17",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att018",
+      "employeeId": "3a2f",
+      "date": "2026-09-18",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att019",
+      "employeeId": "3a2f",
+      "date": "2026-09-19",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att020",
+      "employeeId": "3a2f",
+      "date": "2026-09-20",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att021",
+      "employeeId": "3a2f",
+      "date": "2026-09-21",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att022",
+      "employeeId": "3a2f",
+      "date": "2026-09-22",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att023",
+      "employeeId": "3a2f",
+      "date": "2026-09-23",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att024",
+      "employeeId": "3a2f",
+      "date": "2026-09-24",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att025",
+      "employeeId": "3a2f",
+      "date": "2026-09-25",
+      "status": "Half Day",
+      "inTime": "09:30",
+      "outTime": "13:30",
+      "remark": ""
+    },
+    {
+      "id": "att026",
+      "employeeId": "3a2f",
+      "date": "2026-09-26",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att027",
+      "employeeId": "3a2f",
+      "date": "2026-09-27",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att028",
+      "employeeId": "3a2f",
+      "date": "2026-09-28",
+      "status": "Absent",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att029",
+      "employeeId": "3a2f",
+      "date": "2026-09-29",
+      "status": "Absent",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att030",
+      "employeeId": "3a2f",
+      "date": "2026-09-30",
+      "status": "Absent",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att031",
+      "employeeId": "5a34",
+      "date": "2026-09-01",
+      "status": "Absent",
+      "inTime": "",
+      "outTime": "",
+      "remark": ""
+    },
+    {
+      "id": "att032",
+      "employeeId": "5a34",
+      "date": "2026-09-02",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att033",
+      "employeeId": "5a34",
+      "date": "2026-09-03",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att034",
+      "employeeId": "5a34",
+      "date": "2026-09-04",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att035",
+      "employeeId": "5a34",
+      "date": "2026-09-05",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att036",
+      "employeeId": "5a34",
+      "date": "2026-09-06",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att037",
+      "employeeId": "5a34",
+      "date": "2026-09-07",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att038",
+      "employeeId": "5a34",
+      "date": "2026-09-08",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att039",
+      "employeeId": "5a34",
+      "date": "2026-09-09",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att040",
+      "employeeId": "5a34",
+      "date": "2026-09-10",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att041",
+      "employeeId": "5a34",
+      "date": "2026-09-11",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att042",
+      "employeeId": "5a34",
+      "date": "2026-09-12",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att043",
+      "employeeId": "5a34",
+      "date": "2026-09-13",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att044",
+      "employeeId": "5a34",
+      "date": "2026-09-14",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att045",
+      "employeeId": "5a34",
+      "date": "2026-09-15",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att046",
+      "employeeId": "5a34",
+      "date": "2026-09-16",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att047",
+      "employeeId": "5a34",
+      "date": "2026-09-17",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att048",
+      "employeeId": "5a34",
+      "date": "2026-09-18",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att049",
+      "employeeId": "5a34",
+      "date": "2026-09-19",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att050",
+      "employeeId": "5a34",
+      "date": "2026-09-20",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att051",
+      "employeeId": "5a34",
+      "date": "2026-09-21",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att052",
+      "employeeId": "5a34",
+      "date": "2026-09-22",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att053",
+      "employeeId": "5a34",
+      "date": "2026-09-23",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att054",
+      "employeeId": "5a34",
+      "date": "2026-09-24",
+      "status": "Half Day",
+      "inTime": "09:30",
+      "outTime": "14:30",
+      "remark": ""
+    },
+    {
+      "id": "att055",
+      "employeeId": "5a34",
+      "date": "2026-09-25",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att056",
+      "employeeId": "5a34",
+      "date": "2026-09-26",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att057",
+      "employeeId": "5a34",
+      "date": "2026-09-27",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att058",
+      "employeeId": "5a34",
+      "date": "2026-09-28",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att059",
+      "employeeId": "5a34",
+      "date": "2026-09-29",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
+    },
+    {
+      "id": "att060",
+      "employeeId": "5a34",
+      "date": "2026-09-30",
+      "status": "Present",
+      "inTime": "09:30",
+      "outTime": "18:30",
+      "remark": ""
     }
   ],
   "employeeSalary": [
     {
-      "id": "dfe6",
-      "employeeId": "e4dc",
-      "month": "2026-07",
-      "salary": 15000
+      "id": "3c46",
+      "employeeId": "3a2f",
+      "month": "2026-09",
+      "salary": 22500
     },
     {
-      "id": "8792",
-      "employeeId": "e4dc",
-      "month": "2026-08",
-      "salary": 15000
+      "id": "13b7",
+      "employeeId": "5a34",
+      "month": "2026-09",
+      "salary": 9250
+    }
+  ],
+  "employeeSalarySettlement": [
+    {
+      "id": "03d3",
+      "employeeId": "3a2f",
+      "date": "2026-09-10",
+      "salary": "30000",
+      "paymentType": "ADVANCE",
+      "payment": 3000,
+      "remark": "Medical"
     },
     {
-      "id": "e046",
-      "employeeId": "151c",
-      "month": "2026-07",
-      "salary": 30000
+      "id": "577c",
+      "employeeId": "3a2f",
+      "date": "2026-09-24",
+      "salary": "30000",
+      "paymentType": "ADVANCE",
+      "payment": 1000,
+      "remark": "kuch kaam ke liye"
     },
     {
-      "id": "af95",
-      "employeeId": "151c",
-      "month": "2026-08",
-      "salary": 30000
+      "id": "107e",
+      "employeeId": "5a34",
+      "date": "2026-09-27",
+      "salary": "15000",
+      "paymentType": "ADVANCE",
+      "payment": 5000,
+      "remark": ""
+    }
+  ],
+  "salaryLedger": [
+    {
+      "id": "0626",
+      "employeeId": "3a2f",
+      "referenceId": "03d3",
+      "date": "2026-09-10",
+      "transactionType": "ADVANCE",
+      "debit": 3000,
+      "credit": 0,
+      "description": "Salary Advance",
+      "status": "Active"
+    },
+    {
+      "id": "198a",
+      "employeeId": "3a2f",
+      "referenceId": "577c",
+      "date": "2026-09-24",
+      "transactionType": "ADVANCE",
+      "debit": 1000,
+      "credit": 0,
+      "description": "Salary Advance",
+      "status": "Active"
+    },
+    {
+      "id": "7f70",
+      "employeeId": "3a2f",
+      "referenceId": "3c46",
+      "date": "2026-09-30",
+      "transactionType": "SALARY_PAYMENT",
+      "debit": 0,
+      "credit": 22500,
+      "description": "Salary Payment",
+      "status": "Active"
+    },
+    {
+      "id": "b2ab",
+      "employeeId": "5a34",
+      "referenceId": "107e",
+      "date": "2026-09-27",
+      "transactionType": "ADVANCE",
+      "debit": 5000,
+      "credit": 0,
+      "description": "Salary Advance",
+      "status": "Active"
+    },
+    {
+      "id": "2670",
+      "employeeId": "5a34",
+      "referenceId": "13b7",
+      "date": "2026-09-27",
+      "transactionType": "SALARY_PAYMENT",
+      "debit": 0,
+      "credit": 9250,
+      "description": "Salary Payment",
+      "status": "Active"
     }
   ]
 }

@@ -39,12 +39,12 @@
               <td class="px-4 py-2">{{ item.employeeSalary }}</td>
               <td class="px-4 py-2">{{ item.salary }}</td>
               <td class="px-4 py-2 text-center flex gap-2 justify-center">
-                <button (click)="onEdit(item)" class="px-2 py-1 bg-blue-600 text-white rounded">
-                  Edit
+                <button (click)="onEdit(item)" class="px-2 py-1 bg-green-600 text-white rounded">
+                  Paid
                 </button>
-                <button (click)="onDelete(item.id)" class="px-2 py-1 bg-red-600 text-white rounded">
+                <!-- <button (click)="onDelete(item.id)" class="px-2 py-1 bg-red-600 text-white rounded">
                   Delete
-                </button>
+                </button> -->
               </td>
             </tr>
             } @if (salaryList.length === 0) {
@@ -90,69 +90,99 @@
 <!-- 🔽 Department Form Template -->
 <ng-template #salaryForm>
   <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-    {{ editId ? 'Edit Employee Salary' : 'Add Employee Salary' }}
+    {{ editId ? 'Edit Employee Salary' : 'Generate Salary' }}
   </h2>
-  <form class="space-y-2 max-w-sm" (submit)="saveSalary()">
+
+  <form class="space-y-3 max-w-sm">
+
+    <!-- Employee -->
     <div>
       <div class="flex items-center gap-1">
         <label class="block mb-1 text-sm font-medium">Employee</label>
         <sup class="text-red-500">*</sup>
       </div>
+
       <select
         [(ngModel)]="employeeId"
         name="employeeId"
         required
-        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
       >
-        <option value="" disabled>Select Employee</option>
+        <option [ngValue]="null" disabled>Select Employee</option>
+
         @for (emp of employeeList; track emp.id) {
-        <option [value]="emp.id">{{ emp.fullName }}</option>
+          <option [ngValue]="emp.id">
+            {{ emp.fullName }}
+          </option>
         }
       </select>
     </div>
 
+    <!-- Month -->
     <div>
       <div class="flex items-center gap-1">
         <label class="block mb-1 text-sm font-medium">Month</label>
         <sup class="text-red-500">*</sup>
       </div>
+
       <input
         type="month"
         [(ngModel)]="month"
         name="month"
         required
-        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
+        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
       />
     </div>
 
-    <div>
-      <div class="flex items-center gap-1">
-        <label class="block mb-1 text-sm font-medium">Salary (₹)</label>
-        <sup class="text-red-500">*</sup>
-      </div>
-      <input
-        type="number"
-        [(ngModel)]="salary"
-        name="salary"
-        required
-        class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
-      />
-    </div>
-    <!-- Buttons -->
-    <div class="flex gap-3 pt-2">
-      <button
-        type="submit"
-        class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
-      >
-        {{ editId ? 'Update Salary' : 'Add Salary' }}
-      </button>
+    <!-- Generate Salary -->
+    @if (!salaryGenerated) {
       <button
         type="button"
-        (click)="resetForm()"
-        class="flex-1 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-sm font-medium"
+        (click)="generateSalary()"
+        class="w-full text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
       >
-        Cancel
+        Generate Salary
       </button>
-    </div>
+    }
+
+    <!-- Calculated Salary -->
+    @if (salaryGenerated) {
+      <div>
+        <div class="flex items-center gap-1">
+          <label class="block mb-1 text-sm font-medium">
+            Calculated Salary (₹)
+          </label>
+        </div>
+
+        <input
+          type="number"
+          [(ngModel)]="salary"
+          name="salary"
+          readonly
+          class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex gap-3 pt-2">
+
+        <button
+          type="button"
+          (click)="saveSalary()"
+          class="flex-1 text-white bg-green-600 hover:bg-green-700 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          Pay Salary
+        </button>
+
+        <button
+          type="button"
+          (click)="resetForm()"
+          class="flex-1 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          Cancel
+        </button>
+
+      </div>
+    }
   </form>
 </ng-template>

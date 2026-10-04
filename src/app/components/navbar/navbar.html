@@ -1,7 +1,6 @@
 <nav class="bg-gray-800 fixed top-0 left-0 z-20 w-full">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
-      
       <!-- Mobile menu button -->
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <button
@@ -13,28 +12,28 @@
 
           <!-- Hamburger Icon -->
           @if (!isMobileMenuOpen) {
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
           }
 
           <!-- Close Icon -->
           @if (isMobileMenuOpen) {
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
           }
         </button>
       </div>
@@ -51,38 +50,86 @@
 
         <!-- Desktop Menu -->
         <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-            <a routerLink="/" routerLinkActive="bg-gray-900 text-white" [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
+          <div class="flex flex-wrap gap-2">
+            <a
+              routerLink="/"
+              routerLinkActive="bg-gray-900 text-white"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            >
               Dashboard
             </a>
-            <a routerLink="/department" routerLinkActive="bg-gray-900 text-white"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
+            <a
+              routerLink="/department"
+              routerLinkActive="bg-gray-900 text-white"
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            >
               Department
             </a>
-            <a routerLink="/designation" routerLinkActive="bg-gray-900 text-white"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
+            <a
+              routerLink="/designation"
+              routerLinkActive="bg-gray-900 text-white"
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            >
               Designation
             </a>
-            <a routerLink="/employee-onboard" routerLinkActive="bg-gray-900 text-white"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
+            <a
+              routerLink="/employee-onboard"
+              routerLinkActive="bg-gray-900 text-white"
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            >
               Employee Onboard
             </a>
-            <a routerLink="/employee-salary" routerLinkActive="bg-gray-900 text-white"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
-              Employee Salary
+            <a
+              routerLink="/employee-attendance"
+              routerLinkActive="bg-gray-900 text-white"
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            >
+              Employee Attendance
             </a>
+            <a
+              routerLink="/employee-salary-settle"
+              routerLinkActive="bg-gray-900 text-white"
+              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            >
+              Employee Salary Settle
+            </a>
+              <a
+                routerLink="/employee-salary"
+                routerLinkActive="bg-gray-900 text-white"
+                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+              >
+                Employee Salary
+              </a>
+              <a
+                routerLink="/reports"
+                routerLinkActive="bg-gray-900 text-white"
+                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+              >
+                Reports
+              </a>
           </div>
         </div>
       </div>
 
       <!-- Right Side (Notifications) -->
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+      <div
+        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+      >
         <button type="button" class="relative rounded-full p-1 text-gray-400 hover:text-white">
           <span class="sr-only">View notifications</span>
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+            />
           </svg>
         </button>
       </div>
@@ -91,29 +138,66 @@
 
   <!-- Mobile Menu -->
   @if (isMobileMenuOpen) {
-    <div class="sm:hidden bg-gray-700">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <a routerLink="/" routerLinkActive="bg-gray-900 text-white" [routerLinkActiveOptions]="{ exact: true }"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white">
-          Dashboard
-        </a>
-        <a routerLink="/department" routerLinkActive="bg-gray-900 text-white"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white">
-          Department
-        </a>
-        <a routerLink="/designation" routerLinkActive="bg-gray-900 text-white"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white">
-          Designation
-        </a>
-        <a routerLink="/employee-onboard" routerLinkActive="bg-gray-900 text-white"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white">
-          Employee Onboard
-        </a>
-        <a routerLink="/employee-salary" routerLinkActive="bg-gray-900 text-white"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white">
-          Employee Salary
-        </a>
-      </div>
+  <div class="sm:hidden bg-gray-700">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a
+        routerLink="/"
+        routerLinkActive="bg-gray-900 text-white"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Dashboard
+      </a>
+      <a
+        routerLink="/department"
+        routerLinkActive="bg-gray-900 text-white"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Department
+      </a>
+      <a
+        routerLink="/designation"
+        routerLinkActive="bg-gray-900 text-white"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Designation
+      </a>
+      <a
+        routerLink="/employee-onboard"
+        routerLinkActive="bg-gray-900 text-white"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Employee Onboard
+      </a>
+      <a
+        routerLink="/employee-attendance"
+        routerLinkActive="bg-gray-900 text-white"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Employee Attendance
+      </a>
+      <a
+        routerLink="/employee-salary-settle"
+        routerLinkActive="bg-gray-900 text-white"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Employee Salary Settle
+      </a>
+      <a
+        routerLink="/employee-salary"
+        routerLinkActive="bg-gray-900 text-white"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+      >
+        Employee Salary
+      </a>
+      <a
+      routerLink="/reports"
+      routerLinkActive="bg-gray-900 text-white"
+      class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-600 hover:text-white"
+    >
+      Reports
+    </a>
     </div>
+  </div>
   }
 </nav>
