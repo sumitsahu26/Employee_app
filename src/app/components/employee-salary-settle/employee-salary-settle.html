@@ -1,12 +1,12 @@
 <div class="pt-20 p-6 space-y-6 min-h-screen">
-  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Employee Payment Overview</h1>
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Employee Payment Advance</h1>
 
   <div class="flex flex-col md:flex-row gap-6">
     <!-- Salary Table -->
     <div class="w-full md:w-3/4 p-4 shadow-md rounded-lg bg-white dark:bg-gray-800">
       <div class="flex justify-between items-center mb-3">
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-          Employee Payment Records
+          Employee Payment Advance Records
         </h2>
 
         <!-- Add button (only visible on mobile) -->
@@ -15,7 +15,7 @@
           (click)="onAdd()"
           class="md:hidden text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
         >
-          + Add Settlement
+          + Add Advance
         </button>
       </div>
       <div
@@ -96,7 +96,7 @@
 <!-- 🔽 Department Form Template -->
 <ng-template #salaryForm>
   <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-    {{ editId ? 'Edit Payment Settle' : 'Add Payment Settle' }}
+    {{ editId ? 'Edit Payment Advance' : 'Add Payment Advance' }}
   </h2>
   <form class="space-y-2 max-w-sm" (submit)="saveSalary()">
     <div>

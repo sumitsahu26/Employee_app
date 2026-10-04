@@ -73,6 +73,42 @@
       "designationId": "e1ae",
       "employeeType": "Permanent",
       "salary": "15000"
+    },
+    {
+      "id": "4ea7",
+      "fullName": "Lakhan Choudhary",
+      "email": "lakhan@gmail.com",
+      "phone": "987654321",
+      "gender": "Male",
+      "dateOfJoining": "2026-08-04",
+      "departmentId": "d634",
+      "designationId": "59e1",
+      "employeeType": "Permanent",
+      "salary": "14000"
+    },
+    {
+      "id": "c452",
+      "fullName": "Gopal Kamaliya",
+      "email": "Gopal@gmail.com",
+      "phone": "987654321",
+      "gender": "Male",
+      "dateOfJoining": "2026-07-02",
+      "departmentId": "d634",
+      "designationId": "59e1",
+      "employeeType": "Permanent",
+      "salary": "14000"
+    },
+    {
+      "id": "0e56",
+      "fullName": "Shetan Singh",
+      "email": "shetan@gmail.com",
+      "phone": "987654321",
+      "gender": "Male",
+      "dateOfJoining": "2026-08-06",
+      "departmentId": "d634",
+      "designationId": "cb5c",
+      "employeeType": "Permanent",
+      "salary": "10000"
     }
   ],
   "employeeAttendance": [
