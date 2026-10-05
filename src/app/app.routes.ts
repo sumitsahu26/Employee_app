@@ -10,50 +10,55 @@ import { Reports } from './components/reports/reports';
 import { EmployeeReport } from './components/reports/employee-report/employee-report';
 import { AttendanceReport } from './components/reports/attendance-report/attendance-report';
 import { SalaryReport } from './components/reports/salary-report/salary-report';
+import { SalayAdvanceReport } from './components/reports/salary-advance-report/salary-advance-report';
 
 export const routes: Routes = [
     {
-        path : '',
-        component : Home
+        path: '',
+        component: Home
     },
     {
-        path : 'department',
-        component : Department
+        path: 'department',
+        component: Department
     },
     {
-        path : 'designation',
-        component : Designation
+        path: 'designation',
+        component: Designation
     },
     {
-        path : 'employee-onboard',
-        component : Employee
+        path: 'employee-onboard',
+        component: Employee
     },
     {
-        path : 'employee-salary',
-        component : EmployeeSalary
+        path: 'employee-salary',
+        component: EmployeeSalary
     },
     {
-        path : 'employee-salary-settle',
-        component : EmployeeSalarySettle
+        path: 'employee-salary-settle',
+        component: EmployeeSalarySettle
     },
     {
-        path : 'employee-attendance',
-        component : EmployeeAttendance
+        path: 'employee-attendance',
+        component: EmployeeAttendance
     },
     {
-        path : 'reports',
-        component : Reports
+        path: 'reports',
+        component: Reports
     },
     {
         path: 'reports/employee',
         component: EmployeeReport
-      },
+    },
     {
         path: 'reports/attendance',
         component: AttendanceReport
-      },
+    },
     {
         path: 'reports/salary',
         component: SalaryReport
-      },
+    },
+    {
+        path: 'reports/advance',
+        component: SalayAdvanceReport
+    },
 ];

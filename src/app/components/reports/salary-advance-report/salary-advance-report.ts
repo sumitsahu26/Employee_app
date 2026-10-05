@@ -1,0 +1,355 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import * as XLSX from 'xlsx';
+
+@Component({
+  selector: 'app-salary-advance-report',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ],
+  templateUrl: './salary-advance-report.html'
+})
+export class SalayAdvanceReport {
+
+  private http = inject(HttpClient);
+
+  employeeApiUrl =
+    'http://localhost:3000/employees';
+
+  advanceApiUrl =
+    'http://localhost:3000/employeeSalarySettlement';
+
+  employeeList: any[] = [];
+
+  advanceList: any[] = [];
+
+  filteredAdvanceList: any[] = [];
+
+  searchText = '';
+
+  filterDate = '';
+
+  totalAdvance = 0;
+
+  totalTransactions = 0;
+
+  constructor() {
+
+    this.getEmployees();
+
+  }
+
+  getEmployees() {
+
+    this.http
+      .get<any[]>(this.employeeApiUrl)
+      .subscribe({
+
+        next: (res) => {
+
+          this.employeeList = res;
+
+          this.getAdvance();
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error fetching employees:',
+            err
+          );
+
+          this.employeeList = [];
+
+          this.advanceList = [];
+
+          this.filteredAdvanceList = [];
+
+          this.calculateSummary();
+
+        }
+
+      });
+
+  }
+
+
+  getAdvance() {
+
+    this.http
+      .get<any[]>(this.advanceApiUrl)
+      .subscribe({
+
+        next: (res) => {
+
+          // Only ADVANCE records
+
+          const advanceTransactions =
+            res.filter(
+              item =>
+                item.paymentType === 'ADVANCE'
+            );
+
+
+          // --------------------------------
+          // Create Report Data
+          // --------------------------------
+
+          this.advanceList =
+            advanceTransactions.map(item => {
+
+              const employee =
+                this.employeeList.find(
+                  emp =>
+                    String(emp.id) ===
+                    String(item.employeeId)
+                );
+
+
+              const month =
+                item.date
+                  ? item.date.substring(0, 7)
+                  : '';
+
+
+              return {
+
+                id:
+                  item.id,
+
+                employeeName:
+                  employee?.fullName ||
+                  'Unknown Employee',
+
+                date:
+                  item.date || '-',
+
+                salary:
+                  Number(item.salary || 0),
+
+                payment:
+                  Number(item.payment || 0),
+
+                remark:
+                  item.remark || '-'
+
+              };
+
+            });
+
+
+          // --------------------------------
+          // Default List
+          // --------------------------------
+
+          this.filteredAdvanceList =
+            [
+              ...this.advanceList
+            ];
+
+
+          // --------------------------------
+          // Calculate Summary
+          // --------------------------------
+
+          this.calculateSummary();
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error fetching advance records:',
+            err
+          );
+
+          this.advanceList = [];
+
+          this.filteredAdvanceList = [];
+
+          this.calculateSummary();
+
+        }
+
+      });
+
+  }
+
+  filterAdvance() {
+
+    let result =
+      [
+        ...this.advanceList
+      ];
+
+
+    // --------------------------------
+    // Search Employee
+    // --------------------------------
+
+    if (this.searchText.trim()) {
+
+      const search =
+        this.searchText
+          .trim()
+          .toLowerCase();
+
+
+      result =
+        result.filter(
+          item =>
+            item.employeeName
+              ?.toLowerCase()
+              .includes(search)
+        );
+
+    }
+
+
+    // --------------------------------
+    // Date Filter
+    // --------------------------------
+
+    if (this.filterDate) {
+
+      result =
+        result.filter(
+          item =>
+            item.date ===
+            this.filterDate
+        );
+
+    }
+
+
+    // --------------------------------
+    // Update List
+    // --------------------------------
+
+    this.filteredAdvanceList =
+      result;
+
+
+    // --------------------------------
+    // Update Summary
+    // --------------------------------
+
+    this.calculateSummary();
+
+  }
+
+  clearFilters() {
+
+    this.searchText = '';
+
+    this.filterDate = '';
+
+
+    this.filteredAdvanceList =
+      [
+        ...this.advanceList
+      ];
+
+
+    this.calculateSummary();
+
+  }
+
+  calculateSummary() {
+
+    this.totalTransactions =
+      this.filteredAdvanceList.length;
+
+
+    this.totalAdvance =
+      this.filteredAdvanceList.reduce(
+        (total, item) => {
+
+          return (
+            total +
+            Number(item.payment || 0)
+          );
+
+        },
+        0
+      );
+
+  }
+
+  downloadExcel() {
+
+    if (
+      this.filteredAdvanceList.length === 0
+    ) {
+
+      alert(
+        'No advance data available to download'
+      );
+
+      return;
+
+    }
+
+
+    const excelData =
+      this.filteredAdvanceList.map(
+        (item, index) => {
+
+          return {
+
+            'SN':
+              index + 1,
+
+            'Employee Name':
+              item.employeeName || '-',
+
+            'Date':
+              item.date || '-',
+
+            'Salary':
+              Number(item.salary || 0),
+
+            'Advance Amount':
+              Number(item.payment || 0),
+
+            'Remark':
+              item.remark || '-'
+
+          };
+
+        }
+      );
+
+
+    const worksheet =
+      XLSX.utils.json_to_sheet(
+        excelData
+      );
+
+
+    const workbook =
+      XLSX.utils.book_new();
+
+
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Advance Report'
+    );
+
+
+    XLSX.writeFile(
+      workbook,
+      'Salary_Advance_Report.xlsx'
+    );
+
+  }
+
+}

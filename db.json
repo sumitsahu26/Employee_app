@@ -1211,6 +1211,12 @@
       "employeeId": "4ea7",
       "month": "2026-09",
       "salary": 14000
+    },
+    {
+      "id": "94ac",
+      "employeeId": "5a34",
+      "month": "2026-09",
+      "salary": 9250
     }
   ],
   "employeeSalarySettlement": [
@@ -1240,6 +1246,15 @@
       "paymentType": "ADVANCE",
       "payment": 5000,
       "remark": ""
+    },
+    {
+      "id": "af3d",
+      "employeeId": "c452",
+      "date": "2026-09-27",
+      "salary": "14000",
+      "paymentType": "ADVANCE",
+      "payment": 3000,
+      "remark": "kuch kaam h "
     }
   ],
   "salaryLedger": [
@@ -1295,6 +1310,28 @@
       "transactionType": "SALARY_PAYMENT",
       "debit": 0,
       "credit": 14000,
+      "description": "Salary Payment",
+      "status": "Active"
+    },
+    {
+      "id": "f9ae",
+      "employeeId": "c452",
+      "referenceId": "af3d",
+      "date": "2026-09-27",
+      "transactionType": "ADVANCE",
+      "debit": 3000,
+      "credit": 0,
+      "description": "Salary Advance",
+      "status": "Active"
+    },
+    {
+      "id": "2719",
+      "employeeId": "5a34",
+      "referenceId": "94ac",
+      "date": "2026-09-29",
+      "transactionType": "SALARY_PAYMENT",
+      "debit": 0,
+      "credit": 9250,
       "description": "Salary Payment",
       "status": "Active"
     }

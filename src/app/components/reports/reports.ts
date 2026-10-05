@@ -36,14 +36,14 @@ export class Reports {
       bg: 'bg-purple-100',
       iconBg: 'bg-purple-600'
     },
-    // {
-    //   title: 'Advance Report',
-    //   description: 'View employee salary advance and settlement records.',
-    //   icon: '💵',
-    //   route: '/reports/advance',
-    //   bg: 'bg-orange-100',
-    //   iconBg: 'bg-orange-600'
-    // },
+    {
+      title: 'Advance Report',
+      description: 'View employee salary advance and settlement records.',
+      icon: '💵',
+      route: '/reports/advance',
+      bg: 'bg-orange-100',
+      iconBg: 'bg-orange-600'
+    },
     // {
     //   title: 'Department Report',
     //   description: 'View department-wise employee information.',
