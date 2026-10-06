@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { iDepartment, iDesignation } from '../../app.model';
+// import { any, any } from '../../app.model';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-designation',
@@ -12,16 +13,17 @@ import { CommonModule } from '@angular/common';
 })
 export class Designation {
 
-  apiUrl = 'http://localhost:3000/designations'
+  apiUrl = `${environment.apiUrl}/designations`
+  departmentApiUrl = `${environment.apiUrl}/departments`
 
   private http = inject(HttpClient);
   
-  designationList : iDesignation[] = [];
-  departmentList : iDepartment[] = [];
-  departmentId? : number;
+  designationList : any[] = [];
+  departmentList : any[] = [];
+  departmentid? : number;
   designationName : string = '';
   status : string = 'Active';
-  editId: number | null = null;
+  editid: number | null = null;
   showModal = false;
   departmentError = '';
   designationNameError = '';
@@ -32,14 +34,14 @@ export class Designation {
   }
   
   getDepartments() {
-    this.http.get<iDepartment[]>('http://localhost:3000/departments').subscribe((res) => {
+    this.http.get<any[]>(this.departmentApiUrl).subscribe((res) => {
       this.departmentList = res;
     });
   }
   getDesignations() {
-    this.http.get<iDesignation[]>(this.apiUrl).subscribe((res) => {
+    this.http.get<any[]>(this.apiUrl).subscribe((res) => {
       this.designationList = res.map(designation => {
-        const dep = this.departmentList.find(d => d.id === designation.departmentId);
+        const dep = this.departmentList.find(d => d._id === designation.departmentid);
         return {
           ...designation,
           departmentName: dep ? dep.depName : ''
@@ -52,7 +54,7 @@ export class Designation {
     this.departmentError = '';
     this.designationNameError = ''
 
-    if (!this.departmentId) {
+    if (!this.departmentid) {
       this.departmentError = 'Department is required';
       return;
     }
@@ -60,48 +62,49 @@ export class Designation {
       this.designationNameError = 'Designation Name is required';
       return;
     }
-    if(this.editId) {
-      const updateDept: iDesignation = {
-        id: this.editId,
-        departmentId: this.departmentId!,
+    if(this.editid) {
+      const updateDept: any = {
+        _id: this.editid,
+        departmentid: this.departmentid!,
         designationName: this.designationName,
         status: this.status
       };
-      this.http.put<iDesignation>(`${this.apiUrl}/${this.editId}` , updateDept).subscribe((res)=> {
+      this.http.put<any>(`${this.apiUrl}/${this.editid}` , updateDept).subscribe((res)=> {
         this.getDesignations();
         this.resetForm();
       })
     }else {
-      const newDes: iDesignation = {
-        departmentId: this.departmentId!,
+      const newDes: any = {
+        departmentid: this.departmentid!,
         designationName: this.designationName,
         status: this.status
       };
     
-      this.http.post<iDesignation>(this.apiUrl, newDes).subscribe((res)=> {
+      this.http.post<any>(this.apiUrl, newDes).subscribe((res)=> {
         this.getDesignations();
         this.resetForm();
       })
     }
   }
   
-  onEdit(item: iDesignation) {
-    this.editId = item.id ?? null;
-    this.departmentId = item.departmentId;
+  onEdit(item: any) {
+    this.editid = item._id ?? null;
+    this.departmentid = item.departmentid;
     this.designationName = item.designationName;
     this.status = item.status;
   }
   
-  onDelete(id:any) {
-    this.http.delete(`${this.apiUrl}/${id}`).subscribe((res)=> {
+  onDelete(_id:any) {
+    this.http.delete(`${this.apiUrl}/${_id}`).subscribe((res)=> {
       this.getDesignations();
     })
   }
 
   resetForm(){
-    this.departmentId = null!;
+    this.departmentid = null!;
     this.designationName = '';
     this.status = 'Active';
+    this.editid = null;
   }
 
   onAdd() {

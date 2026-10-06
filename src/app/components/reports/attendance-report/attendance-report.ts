@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-attendance-report',
@@ -15,15 +16,15 @@ export class AttendanceReport {
 
   private http = inject(HttpClient);
 
-  employeeApiUrl = 'http://localhost:3000/employees';
-  attendanceApiUrl = 'http://localhost:3000/employeeAttendance';
+  employeeApiUrl = `${environment.apiUrl}/employees`;
+  attendanceApiUrl = `${environment.apiUrl}/employeeAttendance`;
 
   employeeList: any[] = [];
   attendanceList: any[] = [];
   filteredAttendanceList: any[] = [];
 
   searchText = '';
-  filterEmployeeId: string | number | null = null;
+  filterEmployeeid: string | number | null = null;
   filterDate = '';
 
   constructor() {
@@ -57,7 +58,7 @@ export class AttendanceReport {
         this.attendanceList = res.map(item => {
 
           const employee = this.employeeList.find(
-            emp => String(emp.id) === String(item.employeeId)
+            emp => String(emp._id) === String(item.employeeid)
           );
 
           return {
@@ -90,12 +91,12 @@ export class AttendanceReport {
     let result = [...this.attendanceList];
 
     // Employee filter
-    if (this.filterEmployeeId !== null) {
+    if (this.filterEmployeeid !== null) {
 
       result = result.filter(
         item =>
-          String(item.employeeId) ===
-          String(this.filterEmployeeId)
+          String(item.employeeid) ===
+          String(this.filterEmployeeid)
       );
 
     }
@@ -130,7 +131,7 @@ export class AttendanceReport {
   clearFilters() {
 
     this.searchText = '';
-    this.filterEmployeeId = null;
+    this.filterEmployeeid = null;
     this.filterDate = '';
 
     this.filteredAttendanceList = [

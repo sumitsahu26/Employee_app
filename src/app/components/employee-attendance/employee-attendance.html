@@ -32,15 +32,15 @@
 
         <!-- Employee Filter -->
         <select
-          [(ngModel)]="filterEmployeeId"
-          name="filterEmployeeId"
+          [(ngModel)]="filterEmployeeid"
+          name="filterEmployeeid"
           (change)="filterAttendance()"
           class="w-full sm:w-64 border px-3 py-2 rounded-lg text-sm bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white"
         >
           <option [ngValue]="null">All Employees</option>
 
-          @for (emp of employeeList; track emp.id) {
-          <option [ngValue]="emp.id">
+          @for (emp of employeeList; track emp._id) {
+          <option [ngValue]="emp._id">
             {{ emp.fullName }}
           </option>
           }
@@ -122,7 +122,7 @@
                   </button>
 
                   <button
-                    (click)="onDelete(item.id)"
+                    (click)="onDelete(item._id)"
                     class="px-2 py-1 bg-red-600 text-white rounded"
                   >
                     Delete
@@ -178,7 +178,7 @@
 <!-- Attendance Form Template -->
 <ng-template #attendanceForm>
   <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-    {{ editId ? 'Edit Attendance' : 'Add Attendance' }}
+    {{ editid ? 'Edit Attendance' : 'Add Attendance' }}
   </h2>
 
   <form class="space-y-2 max-w-sm" (submit)="saveAttendance()">
@@ -191,16 +191,16 @@
       </div>
 
       <select
-        [(ngModel)]="employeeId"
-        name="employeeId"
+        [(ngModel)]="employeeid"
+        name="employeeid"
         required
         class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
       >
         <option value="" disabled>Select Employee</option>
 
-        @for (emp of employeeList; track emp.id) {
+        @for (emp of employeeList; track emp._id) {
 
-        <option [value]="emp.id">
+        <option [value]="emp._id">
           {{ emp.fullName }}
         </option>
 
@@ -304,7 +304,7 @@
         type="submit"
         class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
       >
-        {{ editId ? 'Update Attendance' : 'Add Attendance' }}
+        {{ editid ? 'Edit Attendance' : 'Add Attendance' }}
       </button>
 
       <button

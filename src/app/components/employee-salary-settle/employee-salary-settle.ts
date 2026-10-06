@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { iEmployee, iSalary, iSalarySettle } from '../../app.model';
+import { environment } from '../../../environments/environment.development';
+// import { any, iSalary, any } from '../../app.model';
 
 @Component({
   selector: 'app-employee-salary-settle',
@@ -14,16 +15,16 @@ import { iEmployee, iSalary, iSalarySettle } from '../../app.model';
 export class EmployeeSalarySettle {
   private http = inject(HttpClient);
 
-  apiUrl = 'http://localhost:3000/employees';
-  salaryApiUrl = 'http://localhost:3000/employeeSalarySettlement';
-  salaryLedgerApi = 'http://localhost:3000/salaryLedger';
+  apiUrl = `${environment.apiUrl}/employees`;
+  salaryApiUrl = `${environment.apiUrl}/employeeSalarySettlement`;
+  salaryLedgerApi = `${environment.apiUrl}/salaryLedger`;
 
-  employeeList: iEmployee[] = [];
+  employeeList: any[] = [];
   
 
   // form fields
-  editId: number | null = null;
-  employeeId: number | null = null;
+  editid: number | null = null;
+  employeeid: number | null = null;
   date: string = '';
   salary: number = 0;
   paymentType: string = 'ADVANCE';
@@ -31,7 +32,7 @@ export class EmployeeSalarySettle {
   remark: string = '';
   showModal = false;
 
-  salaryList: iSalarySettle[] = [];
+  salaryList: any[] = [];
 
   constructor() {
     this.getEmployees();
@@ -39,7 +40,7 @@ export class EmployeeSalarySettle {
   }
 
   getEmployees() {
-    this.http.get<iEmployee[]>(this.apiUrl).subscribe(res => {
+    this.http.get<any[]>(this.apiUrl).subscribe(res => {
       this.employeeList = res;
     });
   }
@@ -47,7 +48,7 @@ export class EmployeeSalarySettle {
   getSalaries() {
     this.http.get<any[]>(this.salaryApiUrl).subscribe(res => {
       this.salaryList = res.map(salary => {
-        const employee = this.employeeList.find(d => d.id === salary.employeeId)
+        const employee = this.employeeList.find(d => d._id === salary.employeeid)
         return {
           ...salary,
           employeeName: employee?.fullName,
@@ -57,14 +58,14 @@ export class EmployeeSalarySettle {
     });
   }
 
-  getSalaryByEmployeeId() {
-    if (!this.employeeId) {
+  getSalaryByEmployeeid() {
+    if (!this.employeeid) {
       this.salary = 0;
       return;
     }
   
     const employee = this.employeeList.find(
-      emp => emp.id === this.employeeId
+      emp => emp._id === this.employeeid
     );
 
   
@@ -77,11 +78,11 @@ export class EmployeeSalarySettle {
   }
 
   saveSalary() {
-    if (this.editId) {
+    if (this.editid) {
       // update salary
       const updateSalary = {
-        id: this.editId,
-        employeeId: this.employeeId,
+        _id: this.editid,
+        employeeid: this.employeeid,
         date: this.date,
         salary: this.salary,
         paymentType: this.paymentType,
@@ -89,16 +90,16 @@ export class EmployeeSalarySettle {
         remark: this.remark
       };
 
-      this.http.put(`${this.salaryApiUrl}/${this.editId}`, updateSalary).subscribe(() => {
+      this.http.put(`${this.salaryApiUrl}/${this.editid}`, updateSalary).subscribe(() => {
         this.getSalaries();
         this.resetForm();
-        this.editId = null;
+        this.editid = null;
       });
 
     } else {
       // add new salary
       const newSalary = {
-        employeeId: this.employeeId,
+        employeeid: this.employeeid,
         date: this.date,
         salary: this.salary,
         paymentType: this.paymentType,
@@ -107,34 +108,15 @@ export class EmployeeSalarySettle {
       };
 
       this.http.post<any>(this.salaryApiUrl, newSalary).subscribe((res) => {
-
-        const settlementId = res.id;
-
-        this.http.post(this.salaryLedgerApi, {
-          employeeId: this.employeeId,
-          referenceId: settlementId,
-          date: this.date,
-          transactionType: this.paymentType,
-          debit: this.payment,
-          credit: 0,
-          description: "Salary Advance",
-          status: "Active"
-
-        }).subscribe(() => {
-          this.getSalaries();
-          this.resetForm();
-          this.editId = null;
-        });
-
         this.getSalaries();
         this.resetForm();
       });
     }
   }
 
-  onEdit(sal: iSalarySettle) {
-    this.editId = sal.id ?? null;
-    this.employeeId = sal.employeeId;
+  onEdit(sal: any) {
+    this.editid = sal._id ?? null;
+    this.employeeid = sal.employeeid;
     this.date = sal.date;
     this.salary = sal.salary;
     this.paymentType = sal.paymentType;
@@ -142,14 +124,14 @@ export class EmployeeSalarySettle {
     this.remark = sal.remark;
   }
 
-  onDelete(id: any) {
-    this.http.delete(`${this.salaryApiUrl}/${id}`).subscribe(() => {
+  onDelete(_id: any) {
+    this.http.delete(`${this.salaryApiUrl}/${_id}`).subscribe(() => {
       this.getSalaries();
     });
   }
 
   resetForm() {
-    this.employeeId = null;
+    this.employeeid = null;
     this.date = '';
     this.salary = 0;
   }

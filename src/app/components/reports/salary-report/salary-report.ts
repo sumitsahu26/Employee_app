@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import * as XLSX from 'xlsx';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-salary-report',
@@ -15,10 +16,10 @@ export class SalaryReport {
 
   private http = inject(HttpClient);
 
-  employeeApiUrl = 'http://localhost:3000/employees';
-  ledgerApiUrl = 'http://localhost:3000/salaryLedger';
-  attendanceApiUrl = 'http://localhost:3000/employeeAttendance';
-  employeeSalaryApiUrl = 'http://localhost:3000/employeeSalary';
+  employeeApiUrl = `${environment.apiUrl}/employees`;
+  ledgerApiUrl = `${environment.apiUrl}/salaryLedger`;
+  attendanceApiUrl = `${environment.apiUrl}/employeeAttendance`;
+  employeeSalaryApiUrl = `${environment.apiUrl}/employeeSalary`;
 
   employeeSalaryList: any[] = [];
 
@@ -156,7 +157,7 @@ export class SalaryReport {
     this.salaryList = this.employeeList
       .map(employee => {
   
-        const employeeId = employee.id;
+        const employeeid = employee._id;
   
         // --------------------------------
         // Employee Ledger
@@ -165,8 +166,8 @@ export class SalaryReport {
         const employeeLedger =
           this.ledgerList.filter(
             item =>
-              String(item.employeeId) ===
-              String(employeeId)
+              String(item.employeeid) ===
+              String(employeeid)
           );
   
   
@@ -218,8 +219,8 @@ export class SalaryReport {
         const employeeAttendance =
           this.attendanceList?.filter(
             item =>
-              String(item.employeeId) ===
-              String(employeeId)
+              String(item.employeeid) ===
+              String(employeeid)
           ) || [];
   
   
@@ -337,7 +338,7 @@ export class SalaryReport {
   
         return {
   
-          employeeId,
+          employeeid,
   
           employeeName:
             employee.fullName || '-',

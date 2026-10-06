@@ -57,7 +57,7 @@
                   </button>
                   <button
                     type="button"
-                    (click)="onDelete(item.id)"
+                    (click)="onDelete(item._id)"
                     class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-sm text-sm w-full sm:w-auto px-2 py-1 text-center dark:bg-red-600 dark:hover:red-blue-700 dark:focus:ring-red-800"
                   >
                     Delete
@@ -110,7 +110,7 @@
 <!-- 🔽 Designation Form Template -->
 <ng-template #designationForm>
   <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-    {{ editId ? 'Edit Designation' : 'Add Designation' }}
+    {{ editid ? 'Edit Designation' : 'Add Designation' }}
   </h2>
   <form class="space-y-2 max-w-sm" (submit)="saveDesignation()">
     <div>
@@ -124,16 +124,16 @@
       </div>
       <select
         type="text"
-        id="departmentId"
-        [(ngModel)]="departmentId"
-        name="departmentId"
+        id="departmentid"
+        [(ngModel)]="departmentid"
+        name="departmentid"
         placeholder="Select Department"
         required
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
         <option [value]="" disabled>Select Department</option>
         @for (item of departmentList; track $index) {
-        <option [value]="item.id">{{ item.depName }}</option>
+        <option [value]="item._id">{{ item.depName }}</option>
         }
       </select>
       <p *ngIf="departmentError" class="text-red-500 text-sm mt-1">
@@ -181,7 +181,7 @@
         type="submit"
         class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
       >
-        {{ editId ? 'Update Designation' : 'Add Designation' }}
+        {{ editid ? 'Update' : 'Add Designation' }}
       </button>
       <button
         type="button"

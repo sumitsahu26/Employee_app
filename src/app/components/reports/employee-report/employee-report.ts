@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
-import { iDepartment, iDesignation, iEmployee } from '../../../app.model';
+import { environment } from '../../../../environments/environment.development';
+// import { any, any, iEmployee } from '../../../app.model';
 
 @Component({
   selector: 'app-employee-report',
@@ -16,14 +17,14 @@ export class EmployeeReport {
 
   private http = inject(HttpClient);
 
-  employeeApiUrl = 'http://localhost:3000/employees';
-  departmentUrl = 'http://localhost:3000/departments';
-  designationUrl = 'http://localhost:3000/designations'
+  employeeApiUrl = `${environment.apiUrl}/employees`;
+  departmentUrl = `${environment.apiUrl}/departments`
+  designationUrl = `${environment.apiUrl}/designations`
 
   employeeList: any[] = [];
   filteredEmployeeList: any[] = [];
-  departmentList: iDepartment[] = [];
-  designationList: iDesignation[] = [];
+  departmentList: any[] = [];
+  designationList: any[] = [];
 
   searchText = '';
 
@@ -34,14 +35,14 @@ export class EmployeeReport {
   }
 
   getDepartments() {
-    this.http.get<iDepartment[]>(this.departmentUrl).subscribe(res => {
+    this.http.get<any[]>(this.departmentUrl).subscribe(res => {
       this.departmentList = res;
       this.getEmployees();
     });
   }
 
   getDesignations() {
-    this.http.get<iDesignation[]>(this.designationUrl).subscribe(res => {
+    this.http.get<any[]>(this.designationUrl).subscribe(res => {
       this.designationList = res;
       this.getEmployees()
     });
@@ -53,8 +54,8 @@ export class EmployeeReport {
       next: (res) => {
 
         this.employeeList = res.map(emp => {
-          const dept = this.departmentList.find(d => d.id === emp.departmentId);
-          const des = this.designationList.find(ds => ds.id === emp.designationId);
+          const dept = this.departmentList.find(d => d._id === emp.departmentid);
+          const des = this.designationList.find(ds => ds._id === emp.designationid);
           return {
             ...emp,
             departmentName: dept?.depName,

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
-import { iDepartment, iDesignation, iEmployee } from '../../app.model';
+import { environment } from '../../../environments/environment.development';
 
 Chart.register(...registerables);
 
@@ -14,9 +14,9 @@ Chart.register(...registerables);
 })
 export class Home {
   private http = inject(HttpClient);
-  employeeList: iEmployee[] = [];
-  designationList: iDesignation[] = [];
-  departmentList: iDepartment[] = [];
+  employeeList: any[] = [];
+  designationList: any[] = [];
+  departmentList: any[] = [];
 
   private deptChart: Chart | null = null;
   private salaryChart: Chart | null = null;
@@ -25,24 +25,31 @@ export class Home {
   salaryData: any[] = [];
   totalSalaryPaid: number = 0;
 
+  employeeApiUrl = `${environment.apiUrl}/employees`;
+  departmentApiUrl = `${environment.apiUrl}/departments`;
+  salaryApiUrl = `${environment.apiUrl}/employeeSalary`;
+  designationApiUrl = `${environment.apiUrl}/designations`;
+  employeeAttendanceApiUrl = `${environment.apiUrl}/employeeAttendance`;
+
   constructor() {
     this.getDepartments();
     this.getDesignations();
-    this.getEmployeeSalary(); // salary fetch independent
+    this.getEmployeeSalary();
+
   }
 
   getDepartments() {
-    this.http.get<iDepartment[]>('http://localhost:3000/departments').subscribe(res => {
+    this.http.get<any[]>(this.departmentApiUrl).subscribe(res => {
       this.departmentList = res;
       this.getEmployees();
     });
   }
 
   getEmployees() {
-    this.http.get<iEmployee[]>('http://localhost:3000/employees').subscribe(res => {
+    this.http.get<any[]>(this.employeeApiUrl).subscribe(res => {
       this.employeeList = res.map(emp => {
-        const dept = this.departmentList.find(d => d.id === emp.departmentId);
-        const des = this.designationList.find(ds => ds.id === emp.designationId);
+        const dept = this.departmentList.find(d => d._id === emp.departmentid);
+        const des = this.designationList.find(ds => ds._id === emp.designationid);
         return {
           ...emp,
           departmentName: dept?.depName,
@@ -55,7 +62,7 @@ export class Home {
   }
 
   getDesignations() {
-    this.http.get<iDesignation[]>('http://localhost:3000/designations').subscribe(res => {
+    this.http.get<any[]>(this.designationApiUrl).subscribe(res => {
       this.designationList = res;
       this.getEmployees();
     });
@@ -63,7 +70,7 @@ export class Home {
 
   // 🔹 fetch salary once, store it and calculate totals
   getEmployeeSalary() {
-    this.http.get<any[]>('http://localhost:3000/employeeSalary').subscribe(res => {
+    this.http.get<any[]>(this.salaryApiUrl).subscribe(res => {
       this.salaryData = res;
 
       // calculate total salary paid

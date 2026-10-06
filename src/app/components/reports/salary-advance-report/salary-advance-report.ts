@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import * as XLSX from 'xlsx';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-salary-advance-report',
@@ -19,11 +20,8 @@ export class SalayAdvanceReport {
 
   private http = inject(HttpClient);
 
-  employeeApiUrl =
-    'http://localhost:3000/employees';
-
-  advanceApiUrl =
-    'http://localhost:3000/employeeSalarySettlement';
+  employeeApiUrl = `${environment.apiUrl}/employees`;
+  advanceApiUrl = `${environment.apiUrl}/employeeSalarySettlement`;
 
   employeeList: any[] = [];
 
@@ -108,8 +106,8 @@ export class SalayAdvanceReport {
               const employee =
                 this.employeeList.find(
                   emp =>
-                    String(emp.id) ===
-                    String(item.employeeId)
+                    String(emp._id) ===
+                    String(item.employeeid)
                 );
 
 
@@ -121,8 +119,8 @@ export class SalayAdvanceReport {
 
               return {
 
-                id:
-                  item.id,
+                _id:
+                  item._id,
 
                 employeeName:
                   employee?.fullName ||

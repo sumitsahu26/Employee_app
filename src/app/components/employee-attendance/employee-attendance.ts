@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { iEmployee } from '../../app.model';
+// import { any } from '../../app.model';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-employee-attendance',
@@ -15,18 +16,18 @@ export class EmployeeAttendance {
   private http = inject(HttpClient);
 
   // API URLs
-  apiUrl = 'http://localhost:3000/employees';
-  attendanceApiUrl = 'http://localhost:3000/employeeAttendance';
+  apiUrl = `${environment.apiUrl}/employees`;
+  attendanceApiUrl = `${environment.apiUrl}/employeeAttendance`;
 
   // Employee list
-  employeeList: iEmployee[] = [];
+  employeeList: any[] = [];
 
   // Attendance list
   attendanceList: any[] = [];
 
   // Form fields
-  editId: number | null = null;
-  employeeId: number | null = null;
+  editid: number | null = null;
+  employeeid: number | null = null;
 
   date: string = '';
   status: string = 'Present';
@@ -37,7 +38,7 @@ export class EmployeeAttendance {
   showModal = false;
 
   searchText = '';
-  filterEmployeeId: string | number | null = null;
+  filterEmployeeid: string | number | null = null;
   filteredAttendanceList: any[] = [];
   filterDate = '';
 
@@ -48,7 +49,7 @@ export class EmployeeAttendance {
 
   // Get employees
   getEmployees() {
-    this.http.get<iEmployee[]>(this.apiUrl).subscribe({
+    this.http.get<any[]>(this.apiUrl).subscribe({
       next: (res) => {
         this.employeeList = res;
 
@@ -69,7 +70,7 @@ export class EmployeeAttendance {
         this.attendanceList = res.map(attendance => {
   
           const employee = this.employeeList.find(
-            emp => emp.id === attendance.employeeId
+            emp => emp._id === attendance.employeeid
           );
   
           return {
@@ -95,10 +96,10 @@ export class EmployeeAttendance {
     let result = [...this.attendanceList];
   
     // Employee filter
-    if (this.filterEmployeeId !== null) {
+    if (this.filterEmployeeid !== null) {
       result = result.filter(
         item =>
-          String(item.employeeId) === String(this.filterEmployeeId)
+          String(item.employeeid) === String(this.filterEmployeeid)
       );
     }
   
@@ -123,7 +124,7 @@ export class EmployeeAttendance {
 
   clearFilters() {
     this.searchText = '';
-    this.filterEmployeeId = null;
+    this.filterEmployeeid = null;
     this.filterDate = '';
   
     this.filteredAttendanceList = [...this.attendanceList];
@@ -132,7 +133,7 @@ export class EmployeeAttendance {
   // Save attendance
   saveAttendance() {
 
-    if (!this.employeeId) {
+    if (!this.employeeid) {
       alert('Please select employee');
       return;
     }
@@ -148,7 +149,7 @@ export class EmployeeAttendance {
     }
 
     const attendanceData = {
-      employeeId: this.employeeId,
+      employeeid: this.employeeid,
       date: this.date,
       status: this.status,
       inTime: this.inTime,
@@ -157,13 +158,13 @@ export class EmployeeAttendance {
     };
 
     // Update
-    if (this.editId !== null) {
+    if (this.editid !== null) {
 
       this.http
         .put(
-          `${this.attendanceApiUrl}/${this.editId}`,
+          `${this.attendanceApiUrl}/${this.editid}`,
           {
-            id: this.editId,
+            _id: this.editid,
             ...attendanceData
           }
         )
@@ -200,9 +201,9 @@ export class EmployeeAttendance {
   // Edit attendance
   onEdit(item: any) {
 
-    this.editId = item.id ?? null;
+    this.editid = item._id ?? null;
 
-    this.employeeId = item.employeeId;
+    this.employeeid = item.employeeid;
     this.date = item.date;
     this.status = item.status;
     this.inTime = item.inTime;
@@ -214,14 +215,14 @@ export class EmployeeAttendance {
   }
 
   // Delete attendance
-  onDelete(id: number) {
+  onDelete(_id: number) {
 
     if (!confirm('Are you sure you want to delete this attendance record?')) {
       return;
     }
 
     this.http
-      .delete(`${this.attendanceApiUrl}/${id}`)
+      .delete(`${this.attendanceApiUrl}/${_id}`)
       .subscribe({
         next: () => {
           this.getAttendance();
@@ -235,9 +236,9 @@ export class EmployeeAttendance {
   // Reset form
   resetForm() {
 
-    this.editId = null;
+    this.editid = null;
 
-    this.employeeId = null;
+    this.employeeid = null;
     this.date = '';
     this.status = 'Present';
     this.inTime = '';

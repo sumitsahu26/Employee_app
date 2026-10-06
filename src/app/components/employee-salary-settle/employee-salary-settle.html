@@ -48,7 +48,7 @@
                 <button (click)="onEdit(item)" class="px-2 py-1 bg-blue-600 text-white rounded">
                   Edit
                 </button>
-                <button (click)="onDelete(item.id)" class="px-2 py-1 bg-red-600 text-white rounded">
+                <button (click)="onDelete(item._id)" class="px-2 py-1 bg-red-600 text-white rounded">
                   Delete
                 </button>
               </td>
@@ -96,7 +96,7 @@
 <!-- 🔽 Department Form Template -->
 <ng-template #salaryForm>
   <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-    {{ editId ? 'Edit Payment Advance' : 'Add Payment Advance' }}
+    {{ editid ? 'Edit Payment Advance' : 'Add Payment Advance' }}
   </h2>
   <form class="space-y-2 max-w-sm" (submit)="saveSalary()">
     <div>
@@ -105,15 +105,15 @@
         <sup class="text-red-500">*</sup>
       </div>
       <select
-        (change)="getSalaryByEmployeeId()"
-        [(ngModel)]="employeeId"
-        name="employeeId"
+        (change)="getSalaryByEmployeeid()"
+        [(ngModel)]="employeeid"
+        name="employeeid"
         required
         class="w-full border px-3 py-2 rounded-lg text-sm bg-gray-50 dark:bg-gray-700 dark:text-white"
       >
         <option value="" disabled>Select Employee</option>
-        @for (emp of employeeList; track emp.id) {
-        <option [value]="emp.id">{{ emp.fullName }}</option>
+        @for (emp of employeeList; track emp._id) {
+        <option [value]="emp._id">{{ emp.fullName }}</option>
         }
       </select>
     </div>
@@ -192,7 +192,7 @@
         type="submit"
         class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
       >
-        {{ editId ? 'Update Payment' : 'Add Payment' }}
+        {{ editid ? 'Update Payment' : 'Add Payment' }}
       </button>
       <button
         type="button"

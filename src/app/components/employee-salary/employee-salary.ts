@@ -2,7 +2,8 @@ import { Component, inject} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { iEmployee, iSalary } from '../../app.model';
+import { environment } from '../../../environments/environment.development';
+// import { any, any } from '../../app.model';
 
 @Component({
   selector: 'app-employee-salary',
@@ -14,23 +15,24 @@ import { iEmployee, iSalary } from '../../app.model';
 export class EmployeeSalary {
   private http = inject(HttpClient);
 
-  apiUrl = 'http://localhost:3000/employees';
-  salaryApiUrl = 'http://localhost:3000/employeeSalary';
-  salaryLedgerApiUrl = 'http://localhost:3000/salaryLedger';
-  employeeAttendanceApiUrl = 'http://localhost:3000/employeeAttendance';
+  apiUrl = `${environment.apiUrl}/employees`;
+  salaryApiUrl = `${environment.apiUrl}/employeeSalary`;
+  salaryLedgerApiUrl = `${environment.apiUrl}/salaryLedger`;
+  employeeAttendanceApiUrl = `${environment.apiUrl}/employeeAttendance`;
 
-  employeeList: iEmployee[] = [];
+  employeeList: any[] = [];
 
   // form fields
-  editId: number | null = null;
-  employeeId: number | null = null;
+  editid: number | null = null;
+  employeeid: number | null = null;
   month: string = '';
   salary: number = 0;
   showModal = false;
   salaryGenerated = false;
   currentSalary = 0;
+  currentMonth: string = new Date().toISOString().slice(0, 7);
 
-  salaryList: iSalary[] = [];
+  salaryList: any[] = [];
 
   constructor() {
     this.getEmployees();
@@ -38,7 +40,7 @@ export class EmployeeSalary {
   }
 
   getEmployees() {
-    this.http.get<iEmployee[]>(this.apiUrl).subscribe(res => {
+    this.http.get<any[]>(this.apiUrl).subscribe(res => {
       this.employeeList = res;
     });
   }
@@ -46,7 +48,7 @@ export class EmployeeSalary {
   getSalaries() {
     this.http.get<any[]>(this.salaryApiUrl).subscribe(res => {
       this.salaryList = res.map(salary => {
-        const employee = this.employeeList.find(d=> d.id === salary.employeeId)
+        const employee = this.employeeList.find(d=> d._id === salary.employeeid)
         return {
           ...salary,
           employeeName: employee?.fullName,
@@ -58,7 +60,7 @@ export class EmployeeSalary {
 
   generateSalary() {
 
-    if (!this.employeeId) {
+    if (!this.employeeid) {
       alert('Please select employee');
       return;
     }
@@ -69,7 +71,7 @@ export class EmployeeSalary {
     }
   
     const employee = this.employeeList.find(
-      emp => emp.id === this.employeeId
+      emp => emp._id === this.employeeid
     );
   
     if (!employee) {
@@ -83,7 +85,7 @@ export class EmployeeSalary {
   
     // Get attendance of selected employee
     this.http.get<any[]>(
-      `${this.employeeAttendanceApiUrl}?employeeId=${this.employeeId}`
+      `${this.employeeAttendanceApiUrl}?employeeid=${this.employeeid}`
     ).subscribe({
       next: (attendanceList) => {
   
@@ -139,7 +141,7 @@ export class EmployeeSalary {
         // --------------------------------
   
         this.http.get<any[]>(
-          `${this.salaryLedgerApiUrl}?employeeId=${this.employeeId}`
+          `${this.salaryLedgerApiUrl}?employeeid=${this.employeeid}`
         ).subscribe({
           next: (ledgerList) => {
         
@@ -207,30 +209,38 @@ export class EmployeeSalary {
     });
   }
 
+  employeeChange(){
+    this.salaryGenerated = false;
+  }
+
+  monthChange(){
+    this.salaryGenerated = false;
+  }
+
   saveSalary() {
     if (!this.salaryGenerated || this.salary <= 0) {
       alert('Please generate salary first');
       return;
     }
-    if (this.editId) {
+    if (this.editid) {
       // update salary
       const updateSalary = {
-        id: this.editId,
-        employeeId: this.employeeId,
+        _id: this.editid,
+        employeeid: this.employeeid,
         month: this.month,
         salary: this.salary
       };
   
-      this.http.put(`${this.salaryApiUrl}/${this.editId}`, updateSalary).subscribe(() => {
+      this.http.put(`${this.salaryApiUrl}/${this.editid}`, updateSalary).subscribe(() => {
         this.getSalaries();
         this.resetForm();
-        this.editId = null;
+        this.editid = null;
       });
   
     } else {
       // add new salary
       const newSalary = {
-        employeeId: this.employeeId,
+        employeeid: this.employeeid,
         month: this.month,
         salary: this.salary 
       };
@@ -245,8 +255,8 @@ export class EmployeeSalary {
             .split('T')[0];
       
           const ledgerData = {
-            employeeId: this.employeeId,
-            referenceId: res.id,
+            employeeid: this.employeeid,
+            referenceid: res.id,
             date: lastDay,
             transactionType: 'SALARY_PAYMENT',
             debit: 0,
@@ -255,15 +265,11 @@ export class EmployeeSalary {
             status: 'Active'
           };
       
-          this.http.post<any>(
+          this.http.post(
             this.salaryLedgerApiUrl,
             ledgerData
           ).subscribe({
             next: (ledgerRes) => {
-      
-              console.log('Salary saved:', res);
-              console.log('Ledger saved:', ledgerRes);
-      
               this.getSalaries();
               this.resetForm();
       
@@ -281,25 +287,25 @@ export class EmployeeSalary {
     }
   }
   
-  onEdit(sal: iSalary) {
-    this.editId = sal.id ?? null;
-    this.employeeId = sal.employeeId;
+  onEdit(sal: any) {
+    this.editid = sal._id ?? null;
+    this.employeeid = sal.employeeid;
     this.month = sal.month;
     this.salary = sal.salary;
   }
 
-  onDelete(id: any) {
-    this.http.delete(`${this.salaryApiUrl}/${id}`).subscribe(() => {
+  onDelete(_id: any) {
+    this.http.delete(`${this.salaryApiUrl}/${_id}`).subscribe(() => {
       this.getSalaries();
     });
   }
 
   resetForm() {
-    this.employeeId = null;
+    this.employeeid = null;
     this.month = '';
     this.salary = 0;
     this.salaryGenerated = false;
-    this.editId = null;
+    this.editid = null;
   }
 
   onAdd() {

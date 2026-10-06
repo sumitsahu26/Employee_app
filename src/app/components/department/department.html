@@ -50,7 +50,7 @@
                   </button>
                   <button
                     type="button"
-                    (click)="onDelete(item.id)"
+                    (click)="onDelete(item._id)"
                     class="text-white bg-red-700 hover:bg-red-800 px-2 py-1 rounded-sm text-sm"
                   >
                     Delete
@@ -85,7 +85,7 @@
       <!-- Header with Close Button -->
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-          {{ editId ? 'Edit Department' : 'Add Department' }}
+          {{ editid ? 'Edit Department' : 'Add Department' }}
         </h2>
         <button
           type="button"
@@ -106,7 +106,7 @@
   <ng-template #departmentForm>
     <form class="space-y-2 max-w-sm" (ngSubmit)="saveDepartment()">
       <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-        {{ editId ? 'Edit Department' : 'Add Department' }}
+        {{ editid ? 'Edit Department' : 'Add Department' }}
       </h2>
       <!-- Department Name -->
       <div>
@@ -163,7 +163,7 @@
           type="submit"
           class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
         >
-          {{ editId ? 'Update' : 'Add' }}
+          {{ editid ? 'Update' : 'Add' }}
         </button>
         <button
           type="button"

@@ -53,7 +53,7 @@
                   Edit
                 </button>
                 <button
-                  (click)="onDelete(emp.id!)"
+                  (click)="onDelete(emp._id!)"
                   class="ml-2 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
                 >
                   Delete
@@ -88,7 +88,7 @@
     <!-- Header with Close Button -->
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-        {{ editId ? 'Edit Employee' : 'Add Employee' }}
+        {{ editid ? 'Edit Employee' : 'Add Employee' }}
       </h2>
       <button
         type="button"
@@ -108,7 +108,7 @@
 <!-- 🔽 Designation Form Template -->
 <ng-template #employeeForm>
   <h2 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">
-    {{ editId ? 'Edit Employee' : 'Add Employee' }}
+    {{ editid ? 'Edit Employee' : 'Add Employee' }}
   </h2>
   <form class="space-y-2 max-w-sm" (ngSubmit)="saveEmployee()">
     <!-- Full Name -->
@@ -227,23 +227,23 @@
       <div class="flex-1">
         <div class="flex items-center gap-1">
           <label
-            for="departmentId"
+            for="departmentid"
             class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >Select Dapartment</label
           >
           <sup class="text-red-500">*</sup>
         </div>
         <select
-          id="departmentId"
-          (change)="getDesignationsByDepartmentId()"
-          [(ngModel)]="departmentId" 
-          name="departmentId"
+          id="departmentid"
+          (change)="getDesignationsByDepartmentid()"
+          [(ngModel)]="departmentid" 
+          name="departmentid"
           required
           class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="" disabled>Select Department</option>
-          @for (dept of departmentList; track dept.id) {
-          <option [value]="dept.id">{{ dept.depName }}</option>
+          @for (dept of departmentList; track dept._id) {
+          <option [value]="dept._id">{{ dept.depName }}</option>
           }
         </select>
         <p *ngIf="departmentError" class="text-red-500 text-sm mt-1">
@@ -257,22 +257,22 @@
       <div class="flex-1">
         <div class="flex items-center gap-1">
           <label
-            for="designationId"
+            for="designationid"
             class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >Select Designation</label
           >
           <sup class="text-red-500">*</sup>
         </div>
         <select
-          id="designationId"
-          [(ngModel)]="designationId"
-          name="designationId"
+          id="designationid"
+          [(ngModel)]="designationid"
+          name="designationid"
           required
           class="w-full border border-gray-300 text-gray-900 rounded-lg px-3 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="" disabled>Select Designation</option>
-          @for (des of filteredDesignationList; track des.id) {
-          <option [value]="des.id">{{ des.designationName }}</option>
+          @for (des of filteredDesignationList; track des._id) {
+          <option [value]="des._id">{{ des.designationName }}</option>
           }
         </select>
         <p *ngIf="designationError" class="text-red-500 text-sm mt-1">
@@ -326,7 +326,7 @@
         type="submit"
         class="flex-1 text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
       >
-        {{ editId ? 'Update Employee' : 'Add Employee' }}
+        {{ editid ? 'Update Employee' : 'Add Employee' }}
       </button>
       <button
         type="button"
