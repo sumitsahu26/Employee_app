@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://localhost:5001'
+    apiUrl: 'https://employeeapp-backend-5pys.onrender.com/'
   };
