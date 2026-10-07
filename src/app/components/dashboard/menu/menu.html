@@ -1,0 +1,339 @@
+<div class="min-h-screen bg-[#f8f5ef]">
+    <!-- HEADER -->
+    <section class="bg-[#17130f] text-white pt-28 pb-14">
+  
+      <div class="max-w-7xl mx-auto px-5 text-center">
+  
+        <p
+          class="text-[#d9ad5b] uppercase tracking-[0.3em]
+                 text-xs md:text-sm font-semibold"
+        >
+          Anand Family Restaurant
+        </p>
+  
+        <h1
+          class="text-4xl md:text-6xl font-bold mt-4"
+        >
+          Our Menu
+        </h1>
+  
+        <p class="text-gray-400 mt-4 max-w-xl mx-auto">
+          स्वादिष्ट भोजन, बेहतरीन स्वाद और आपके अपने परिवार जैसा माहौल।
+        </p>
+  
+      </div>
+  
+    </section>
+  
+  
+    <!-- MENU CONTENT -->
+    <section class="py-10 md:py-16">
+  
+      <div class="max-w-6xl mx-auto px-4 md:px-6">
+  
+  
+        <!-- SEARCH -->
+        <div class="max-w-xl mx-auto mb-8">
+  
+          <div class="relative">
+  
+            <input
+              type="text"
+              [(ngModel)]="searchText"
+              placeholder="Search food... / खाना खोजें..."
+              class="w-full bg-white border border-gray-200
+                     rounded-full px-6 py-4 pr-12
+                     outline-none
+                     focus:border-[#d9ad5b]
+                     focus:ring-2 focus:ring-[#d9ad5b]/20"
+            />
+  
+            <span
+              class="absolute right-5 top-1/2
+                     -translate-y-1/2 text-gray-400 text-xl"
+            >
+              🔍
+            </span>
+  
+          </div>
+  
+        </div>
+  
+  
+        <!-- CATEGORY BUTTONS -->
+        <div
+          class="flex gap-2 overflow-x-auto pb-4
+                 scrollbar-hide"
+        >
+  
+          <button
+            *ngFor="let category of categories"
+            (click)="selectCategory(category.name)"
+            class="flex-shrink-0 px-5 py-2.5
+                   rounded-full text-sm font-semibold
+                   transition duration-300"
+            [ngClass]="
+              selectedCategory === category.name
+                ? 'bg-[#17130f] text-[#d9ad5b] shadow-md'
+                : 'bg-white text-gray-600 border border-gray-200 hover:border-[#d9ad5b]'
+            "
+          >
+  
+            {{ category.name }}
+  
+          </button>
+  
+        </div>
+  
+  
+        <!-- CURRENT CATEGORY -->
+        <div
+          *ngIf="currentCategory"
+          class="mt-10"
+        >
+  
+          <!-- CATEGORY TITLE -->
+          <div class="text-center mb-8">
+  
+            <p
+              class="text-[#b2873d] text-sm
+                     font-semibold tracking-[0.2em]"
+            >
+              {{ currentCategory.name }}
+            </p>
+  
+            <h2
+              class="text-3xl md:text-4xl
+                     font-bold text-[#17130f] mt-1"
+            >
+              {{ currentCategory.hindi }}
+            </h2>
+  
+            <div
+              class="w-16 h-1 bg-[#d9ad5b]
+                     mx-auto mt-4 rounded-full"
+            ></div>
+  
+          </div>
+  
+  
+          <!-- PRICE HEADER -->
+          <div
+          class="hidden md:flex
+                 justify-end gap-12
+                 px-6 mb-2
+                 text-xs font-bold
+                 text-gray-400 uppercase"
+          *ngIf="hasHalfFullPrices()"
+        >
+            <span>Half</span>
+            <span>Full</span>
+          </div>
+  
+  
+          <!-- ITEMS -->
+          <div
+            class="bg-white rounded-3xl
+                   shadow-sm border border-gray-100
+                   overflow-hidden"
+          >
+  
+            <div
+              *ngFor="let item of filteredItems; let last = last"
+              class="px-5 md:px-7 py-5
+                     hover:bg-[#fcfaf6]
+                     transition"
+              [ngClass]="{
+                'border-b border-gray-100': !last
+              }"
+            >
+  
+              <div
+                class="flex items-center
+                       justify-between gap-4"
+              >
+  
+                <!-- NAME -->
+                <div class="min-w-0">
+  
+                  <h3
+                    class="font-semibold text-[#17130f]
+                           text-base md:text-lg"
+                  >
+                    {{ item.name }}
+                  </h3>
+  
+                  <p
+                    class="text-gray-500
+                           text-sm mt-0.5"
+                  >
+                    {{ item.hindi }}
+                  </p>
+  
+                  <span
+                    *ngIf="item.note"
+                    class="inline-block mt-2
+                           text-xs text-[#b2873d]
+                           bg-[#fff7e6]
+                           px-2.5 py-1 rounded-full"
+                  >
+                    {{ item.note }}
+                  </span>
+  
+                </div>
+  
+  
+                <!-- PRICE -->
+                <div class="flex-shrink-0">
+  
+                  <!-- SINGLE PRICE -->
+                  <div
+                    *ngIf="item.price !== undefined"
+                    class="text-[#b2873d]
+                           font-bold text-lg md:text-xl"
+                  >
+                    ₹{{ item.price }}
+                  </div>
+  
+  
+                  <!-- HALF FULL -->
+                  <div
+                    *ngIf="
+                      item.half !== undefined ||
+                      item.full !== undefined
+                    "
+                    class="flex items-center
+                           gap-5 md:gap-10"
+                  >
+  
+                    <div class="text-right">
+  
+                      <span
+                        class="md:hidden block
+                               text-[10px]
+                               text-gray-400 uppercase"
+                      >
+                        Half
+                      </span>
+  
+                      <span
+                        *ngIf="item.half !== undefined"
+                        class="font-bold
+                               text-[#b2873d]"
+                      >
+                        ₹{{ item.half }}
+                      </span>
+  
+                      <span
+                        *ngIf="item.half === undefined"
+                        class="text-gray-300"
+                      >
+                        -
+                      </span>
+  
+                    </div>
+  
+  
+                    <div class="text-right">
+  
+                      <span
+                        class="md:hidden block
+                               text-[10px]
+                               text-gray-400 uppercase"
+                      >
+                        Full
+                      </span>
+  
+                      <span
+                        *ngIf="item.full !== undefined"
+                        class="font-bold
+                               text-[#b2873d]"
+                      >
+                        ₹{{ item.full }}
+                      </span>
+  
+                      <span
+                        *ngIf="item.full === undefined"
+                        class="text-gray-300"
+                      >
+                        -
+                      </span>
+  
+                    </div>
+  
+                  </div>
+  
+                </div>
+  
+              </div>
+  
+            </div>
+  
+  
+            <!-- NO RESULT -->
+            <div
+              *ngIf="filteredItems.length === 0"
+              class="py-16 text-center"
+            >
+  
+              <div class="text-5xl">
+                🍽️
+              </div>
+  
+              <h3 class="text-xl font-bold mt-4">
+                No items found
+              </h3>
+  
+              <p class="text-gray-500 mt-2">
+                Try another food name.
+              </p>
+  
+            </div>
+  
+          </div>
+  
+        </div>
+  
+      </div>
+  
+    </section>
+  
+  
+    <!-- FOOTER CTA -->
+    <section
+      class="bg-[#17130f] text-white
+             py-14 text-center"
+    >
+  
+      <p
+        class="text-[#d9ad5b]
+               uppercase tracking-[0.25em]
+               text-xs font-semibold"
+      >
+        Anand Family Restaurant
+      </p>
+  
+      <h2 class="text-3xl md:text-4xl font-bold mt-3">
+        स्वाद का आनंद लीजिए ❤️
+      </h2>
+  
+      <p class="text-gray-400 mt-3">
+        Good food. Good people. Good memories.
+      </p>
+  
+      <a
+        href="tel:+917440787808"
+        class="inline-block mt-6
+               px-7 py-3
+               rounded-full
+               bg-[#d9ad5b]
+               text-black font-semibold
+               hover:bg-[#edc979]
+               transition"
+      >
+        Call Now
+      </a>
+  
+    </section>
+  
+  </div>

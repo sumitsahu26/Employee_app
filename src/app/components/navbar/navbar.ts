@@ -11,4 +11,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Navbar {
   isMobileMenuOpen : boolean = false;
 
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
 }
