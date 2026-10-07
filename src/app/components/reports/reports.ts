@@ -16,7 +16,7 @@ export class Reports {
       title: 'Employee Report',
       description: 'View employee details, department, designation and salary.',
       icon: '👤',
-      route: 'admin/reports/employee',
+      route: '/admin/reports/employee',
       bg: 'bg-blue-100',
       iconBg: 'bg-blue-600'
     },
@@ -24,7 +24,7 @@ export class Reports {
       title: 'Attendance Report',
       description: 'View employee attendance and daily attendance records.',
       icon: '📅',
-      route: 'admin/reports/attendance',
+      route: '/admin/reports/attendance',
       bg: 'bg-green-100',
       iconBg: 'bg-green-600'
     },
@@ -32,7 +32,7 @@ export class Reports {
       title: 'Salary Report',
       description: 'View employee salary, payment and salary history.',
       icon: '💰',
-      route: 'admin/reports/salary',
+      route: '/admin/reports/salary',
       bg: 'bg-purple-100',
       iconBg: 'bg-purple-600'
     },
@@ -40,7 +40,7 @@ export class Reports {
       title: 'Advance Report',
       description: 'View employee salary advance and settlement records.',
       icon: '💵',
-      route: 'admin/reports/advance',
+      route: '/admin/reports/advance',
       bg: 'bg-orange-100',
       iconBg: 'bg-orange-600'
     },

@@ -1,0 +1,17 @@
+<div
+  *ngIf="loading$ | async"
+  class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
+>
+  <div class="bg-white rounded-2xl px-8 py-7 shadow-2xl flex flex-col items-center">
+
+    <!-- Spinner -->
+    <div
+      class="w-12 h-12 border-4 border-gray-200 border-t-[#d9ad5b] rounded-full animate-spin"
+    ></div>
+
+    <p class="mt-4 text-gray-700 font-medium">
+      Loading...
+    </p>
+
+  </div>
+</div>

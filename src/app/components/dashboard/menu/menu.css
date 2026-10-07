@@ -1,0 +1,3 @@
+section[id^="category-"] {
+    scroll-margin-top: 100px;
+  }
