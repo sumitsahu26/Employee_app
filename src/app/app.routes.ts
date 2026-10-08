@@ -21,6 +21,8 @@ import { AdminLogin } from './components/admin-login/admin-login';
 import { PublicLayouts } from './components/layouts/public-layouts/public-layouts';
 import { AdminLayouts } from './components/layouts/admin-layouts/admin-layouts';
 
+import { adminAuthGuard } from './guards/admin-auth-guard';
+
 export const routes: Routes = [
   {
     path: '',
@@ -46,11 +48,12 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayouts,
+    canActivate: [adminAuthGuard],
     children: [
 
       {
         path: 'dashboard',
-        component: Home
+        component: Home,
       },
 
       {
