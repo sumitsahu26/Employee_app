@@ -1,0 +1,963 @@
+<div class="pt-20 p-6 space-y-6 min-h-screen">
+
+    <!-- PAGE HEADING -->
+    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">
+      Menu Management
+    </h1>
+  
+    <div class="flex gap-6 flex-col lg:flex-row">
+  
+      <!-- ====================================================== -->
+      <!-- MENU CATEGORY LIST -->
+      <!-- ====================================================== -->
+  
+      <div
+        class="w-full lg:w-1/4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
+      >
+  
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+  
+          <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            Menu Categories
+          </h2>
+  
+          <!-- Mobile Add -->
+          <button
+            type="button"
+            (click)="onAddCategory()"
+            class="lg:hidden text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-3 py-2 text-sm font-medium"
+          >
+            + Add
+          </button>
+  
+        </div>
+  
+        <!-- Search Category -->
+        <div class="mb-4">
+  
+          <input
+            type="text"
+            [(ngModel)]="categorySearch"
+            placeholder="Search category..."
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                   dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          />
+  
+        </div>
+  
+        <!-- Category List -->
+  
+        <div class="space-y-2 max-h-[600px] overflow-y-auto">
+  
+          @if (isLoadingCategories) {
+  
+            <div class="flex flex-col items-center justify-center py-10">
+  
+              <div
+                class="w-9 h-9 border-4 border-gray-200 border-t-[#d9ad5b]
+                       rounded-full animate-spin"
+              ></div>
+  
+              <p class="mt-3 text-sm text-gray-500">
+                Loading categories...
+              </p>
+  
+            </div>
+  
+          }
+  
+          @if (!isLoadingCategories) {
+  
+            @for (category of filteredCategories; track category._id) {
+  
+              <button
+                type="button"
+                (click)="selectCategory(category)"
+                class="w-full text-left p-3 rounded-lg border transition"
+                [ngClass]="
+                  selectedCategory?._id === category._id
+                    ? 'bg-blue-50 border-blue-500 dark:bg-blue-900/30'
+                    : 'bg-white border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700'
+                "
+              >
+  
+                <div class="flex justify-between items-center">
+  
+                  <div>
+  
+                    <p
+                      class="font-medium text-gray-800 dark:text-white"
+                    >
+                      {{ category.name }}
+                    </p>
+  
+                    <p
+                      class="text-xs text-gray-500 dark:text-gray-400 mt-1"
+                    >
+                      {{ category.hindi }}
+                    </p>
+  
+                  </div>
+  
+                  <span
+                    class="text-xs bg-gray-100 dark:bg-gray-700
+                           px-2 py-1 rounded-full"
+                  >
+                    {{ getItemCount(category._id) }}
+                  </span>
+  
+                </div>
+  
+              </button>
+  
+            }
+  
+            @if (filteredCategories.length === 0) {
+  
+              <div class="text-center py-10 text-gray-400">
+                No categories available
+              </div>
+  
+            }
+  
+          }
+  
+        </div>
+  
+        <!-- Desktop Add Category -->
+  
+        <button
+          type="button"
+          (click)="onAddCategory()"
+          class="hidden lg:block w-full mt-4 text-white bg-blue-600
+                 hover:bg-blue-700 rounded-lg px-4 py-2 text-sm font-medium"
+        >
+          + Add Category
+        </button>
+  
+      </div>
+  
+  
+      <!-- ====================================================== -->
+      <!-- MENU ITEM LIST -->
+      <!-- ====================================================== -->
+  
+      <div
+        class="w-full lg:w-2/4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
+      >
+  
+        <!-- Header -->
+  
+        <div
+          class="flex flex-col sm:flex-row sm:justify-between
+                 sm:items-center gap-3 mb-4"
+        >
+  
+          <div>
+  
+            <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+  
+              @if (selectedCategory) {
+                {{ selectedCategory.name }}
+              } @else {
+                Menu Items
+              }
+  
+            </h2>
+  
+            @if (selectedCategory) {
+  
+              <p class="text-sm text-gray-500">
+                {{ selectedCategory.hindi }}
+              </p>
+  
+            }
+  
+          </div>
+  
+  
+          <!-- Add Item -->
+  
+          <button
+            type="button"
+            (click)="onAddItem()"
+            [disabled]="!selectedCategory"
+            class="text-white bg-blue-600 hover:bg-blue-700
+                   rounded-lg px-4 py-2 text-sm font-medium
+                   disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            + Add Item
+          </button>
+  
+        </div>
+  
+  
+        <!-- Search Item -->
+  
+        <div class="mb-4">
+  
+          <input
+            type="text"
+            [(ngModel)]="itemSearch"
+            placeholder="Search menu item..."
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                   rounded-lg focus:ring-blue-500 focus:border-blue-500
+                   block w-full p-2.5
+                   dark:bg-gray-700 dark:border-gray-600
+                   dark:text-white"
+          />
+  
+        </div>
+  
+  
+        <!-- Items Table -->
+  
+        <div
+          class="relative overflow-x-auto max-h-[600px]
+                 overflow-y-auto shadow-md sm:rounded-lg"
+        >
+  
+          <table
+            class="w-full text-sm text-left text-gray-600 dark:text-gray-300"
+          >
+  
+            <thead
+              class="text-xs uppercase bg-gray-100
+                     dark:bg-gray-700 sticky top-0 z-10"
+            >
+  
+              <tr>
+  
+                <th class="px-4 py-3">
+                  SN
+                </th>
+  
+                <th class="px-4 py-3">
+                  Item
+                </th>
+  
+                <th class="px-4 py-3">
+                  Price
+                </th>
+  
+                <th class="px-4 py-3">
+                  Status
+                </th>
+  
+                <th class="px-4 py-3">
+                  Action
+                </th>
+  
+              </tr>
+  
+            </thead>
+  
+  
+            <tbody>
+  
+              <!-- Loader -->
+  
+              @if (isLoadingItems) {
+  
+                <tr>
+  
+                  <td
+                    colspan="5"
+                    class="px-6 py-12"
+                  >
+  
+                    <div
+                      class="flex flex-col items-center justify-center"
+                    >
+  
+                      <div
+                        class="w-9 h-9 border-4 border-gray-200
+                               border-t-[#d9ad5b] rounded-full animate-spin"
+                      ></div>
+  
+                      <p class="mt-3 text-sm text-gray-500">
+                        Loading menu items...
+                      </p>
+  
+                    </div>
+  
+                  </td>
+  
+                </tr>
+  
+              }
+  
+  
+              <!-- Items -->
+  
+              @if (!isLoadingItems) {
+  
+                @for (item of filteredItems; track item._id) {
+  
+                  <tr
+                    class="bg-white border-b border-gray-200
+                           dark:bg-gray-800 dark:border-gray-700"
+                  >
+  
+                    <td class="px-4 py-3">
+                      {{ $index + 1 }}
+                    </td>
+  
+  
+                    <td class="px-4 py-3">
+  
+                      <div>
+  
+                        <p
+                          class="font-medium text-gray-900
+                                 dark:text-white"
+                        >
+                          {{ item.name }}
+                        </p>
+  
+                        <p
+                          class="text-xs text-gray-500"
+                        >
+                          {{ item.hindi }}
+                        </p>
+  
+                        @if (item.note) {
+  
+                          <p
+                            class="text-xs text-orange-500 mt-1"
+                          >
+                            {{ item.note }}
+                          </p>
+  
+                        }
+  
+                      </div>
+  
+                    </td>
+  
+  
+                    <td class="px-4 py-3">
+  
+                      @if (item.half || item.full) {
+  
+                        <div class="text-xs">
+  
+                          @if (item.half) {
+                            <div>
+                              Half: ₹{{ item.half }}
+                            </div>
+                          }
+  
+                          @if (item.full) {
+                            <div>
+                              Full: ₹{{ item.full }}
+                            </div>
+                          }
+  
+                        </div>
+  
+                      } @else {
+  
+                        ₹{{ item.price }}
+  
+                      }
+  
+                    </td>
+  
+  
+                    <td class="px-4 py-3">
+  
+                      <span
+                        [ngClass]="
+                          item.status === 'Active'
+                            ? 'text-green-600'
+                            : 'text-red-600'
+                        "
+                      >
+                        {{ item.status }}
+                      </span>
+  
+                    </td>
+  
+  
+                    <td class="px-4 py-3">
+  
+                      <div class="flex gap-2">
+  
+                        <!-- EDIT -->
+  
+                        <button
+                          type="button"
+                          (click)="onEditItem(item)"
+                          class="text-white bg-blue-700
+                                 hover:bg-blue-800 px-2 py-1
+                                 rounded-sm text-sm"
+                        >
+                          Edit
+                        </button>
+  
+  
+                        <!-- DELETE -->
+  
+                        <button
+                          type="button"
+                          (click)="onDeleteItem(item._id)"
+                          [disabled]="isDeletingItem"
+                          class="text-white bg-red-700
+                                 hover:bg-red-800 px-2 py-1
+                                 rounded-sm text-sm
+                                 disabled:opacity-50"
+                        >
+  
+                          @if (isDeletingItem) {
+                            Deleting...
+                          } @else {
+                            Delete
+                          }
+  
+                        </button>
+  
+                      </div>
+  
+                    </td>
+  
+                  </tr>
+  
+                }
+  
+  
+                <!-- No Items -->
+  
+                @if (filteredItems.length === 0) {
+  
+                  <tr>
+  
+                    <td
+                      colspan="5"
+                      class="px-6 py-10 text-center text-gray-400"
+                    >
+                      No menu items available
+                    </td>
+  
+                  </tr>
+  
+                }
+  
+              }
+  
+            </tbody>
+  
+          </table>
+  
+        </div>
+  
+      </div>
+  
+  
+      <!-- ====================================================== -->
+      <!-- MENU ITEM FORM -->
+      <!-- ====================================================== -->
+  
+      <div
+        class="hidden lg:block w-full lg:w-1/4
+               p-4 bg-white dark:bg-gray-800
+               rounded-lg shadow-lg"
+      >
+  
+        <ng-container
+          *ngTemplateOutlet="menuForm"
+        ></ng-container>
+  
+      </div>
+  
+    </div>
+  
+  
+    <!-- ====================================================== -->
+    <!-- MOBILE FORM MODAL -->
+    <!-- ====================================================== -->
+  
+    @if (showModal) {
+  
+      <div
+        class="fixed inset-0 flex items-center justify-center
+               backdrop-blur-xs bg-black/30 z-50 lg:hidden"
+      >
+  
+        <div
+          class="bg-white dark:bg-gray-800 rounded-lg shadow-lg
+                 p-6 w-11/12 max-w-md relative max-h-[90vh]
+                 overflow-y-auto"
+        >
+  
+          <!-- Header -->
+  
+          <div
+            class="flex justify-between items-center mb-4"
+          >
+  
+            <h2
+              class="text-lg font-semibold text-gray-700
+                     dark:text-gray-200"
+            >
+  
+              @if (formType === 'category') {
+  
+                {{ editCategoryId
+                  ? 'Edit Category'
+                  : 'Add Category' }}
+  
+              } @else {
+  
+                {{ editItemId
+                  ? 'Edit Menu Item'
+                  : 'Add Menu Item' }}
+  
+              }
+  
+            </h2>
+  
+  
+            <button
+              type="button"
+              (click)="onCancel()"
+              class="text-gray-500 hover:text-gray-700
+                     dark:hover:text-gray-300"
+            >
+              ✕
+            </button>
+  
+          </div>
+  
+  
+          <ng-container
+            *ngTemplateOutlet="menuForm"
+          ></ng-container>
+  
+        </div>
+  
+      </div>
+  
+    }
+  
+  
+    <!-- ====================================================== -->
+    <!-- FORM TEMPLATE -->
+    <!-- ====================================================== -->
+  
+    <ng-template #menuForm>
+  
+      <!-- CATEGORY FORM -->
+  
+      @if (formType === 'category') {
+  
+        <form
+          class="space-y-4"
+          (ngSubmit)="saveCategory()"
+        >
+  
+          <!-- Category Name -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Category Name
+              <sup class="text-red-500">*</sup>
+            </label>
+  
+            <input
+              type="text"
+              [(ngModel)]="categoryName"
+              name="categoryName"
+              placeholder="Enter category name"
+              required
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     focus:ring-blue-500 focus:border-blue-500
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            />
+  
+          </div>
+  
+  
+          <!-- Hindi -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Hindi Name
+            </label>
+  
+            <input
+              type="text"
+              [(ngModel)]="categoryHindi"
+              name="categoryHindi"
+              placeholder="हिंदी नाम"
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            />
+  
+          </div>
+  
+  
+          <!-- Status -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Status
+            </label>
+  
+            <select
+              [(ngModel)]="categoryStatus"
+              name="categoryStatus"
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            >
+  
+              <option value="Active">
+                Active
+              </option>
+  
+              <option value="Inactive">
+                Inactive
+              </option>
+  
+            </select>
+  
+          </div>
+  
+  
+          <!-- Buttons -->
+  
+          <div class="flex gap-3 pt-3">
+  
+            <button
+              type="submit"
+              [disabled]="isSavingCategory"
+              class="flex-1 text-white bg-blue-600
+                     hover:bg-blue-700 rounded-lg px-4 py-2
+                     text-sm font-medium disabled:opacity-60"
+            >
+  
+              @if (isSavingCategory) {
+  
+                <span
+                  class="flex items-center justify-center gap-2"
+                >
+  
+                  <span
+                    class="w-4 h-4 border-2 border-white/30
+                           border-t-white rounded-full animate-spin"
+                  ></span>
+  
+                  Saving...
+  
+                </span>
+  
+              } @else {
+  
+                {{ editCategoryId ? 'Update' : 'Add' }}
+  
+              }
+  
+            </button>
+  
+  
+            <button
+              type="button"
+              (click)="onCancel()"
+              class="flex-1 text-gray-700 bg-gray-200
+                     hover:bg-gray-300 rounded-lg px-4 py-2
+                     text-sm font-medium"
+            >
+              Cancel
+            </button>
+  
+          </div>
+  
+        </form>
+  
+      }
+  
+  
+      <!-- MENU ITEM FORM -->
+  
+      @if (formType === 'item') {
+  
+        <form
+          class="space-y-4"
+          (ngSubmit)="saveItem()"
+        >
+  
+          <!-- Item Name -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Item Name
+              <sup class="text-red-500">*</sup>
+            </label>
+  
+            <input
+              type="text"
+              [(ngModel)]="itemName"
+              name="itemName"
+              placeholder="Enter item name"
+              required
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            />
+  
+          </div>
+  
+  
+          <!-- Hindi Name -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Hindi Name
+            </label>
+  
+            <input
+              type="text"
+              [(ngModel)]="itemHindi"
+              name="itemHindi"
+              placeholder="हिंदी नाम"
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            />
+  
+          </div>
+  
+  
+          <!-- Price -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Price
+            </label>
+  
+            <input
+              type="number"
+              [(ngModel)]="itemPrice"
+              name="itemPrice"
+              min="0"
+              placeholder="Enter price"
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            />
+  
+          </div>
+  
+  
+          <!-- Half / Full -->
+  
+          <div class="grid grid-cols-2 gap-3">
+  
+            <div>
+  
+              <label
+                class="block mb-2 text-sm font-medium
+                       text-gray-900 dark:text-white"
+              >
+                Half Price
+              </label>
+  
+              <input
+                type="number"
+                [(ngModel)]="itemHalf"
+                name="itemHalf"
+                min="0"
+                placeholder="Half"
+                class="bg-gray-50 border border-gray-300
+                       text-gray-900 text-sm rounded-lg
+                       block w-full p-2.5
+                       dark:bg-gray-700 dark:border-gray-600
+                       dark:text-white"
+              />
+  
+            </div>
+  
+  
+            <div>
+  
+              <label
+                class="block mb-2 text-sm font-medium
+                       text-gray-900 dark:text-white"
+              >
+                Full Price
+              </label>
+  
+              <input
+                type="number"
+                [(ngModel)]="itemFull"
+                name="itemFull"
+                min="0"
+                placeholder="Full"
+                class="bg-gray-50 border border-gray-300
+                       text-gray-900 text-sm rounded-lg
+                       block w-full p-2.5
+                       dark:bg-gray-700 dark:border-gray-600
+                       dark:text-white"
+              />
+  
+            </div>
+  
+          </div>
+  
+  
+          <!-- Note -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Note
+            </label>
+  
+            <input
+              type="text"
+              [(ngModel)]="itemNote"
+              name="itemNote"
+              placeholder="e.g. Seasonal"
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            />
+  
+          </div>
+  
+  
+          <!-- Status -->
+  
+          <div>
+  
+            <label
+              class="block mb-2 text-sm font-medium
+                     text-gray-900 dark:text-white"
+            >
+              Status
+            </label>
+  
+            <select
+              [(ngModel)]="itemStatus"
+              name="itemStatus"
+              class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg
+                     block w-full p-2.5
+                     dark:bg-gray-700 dark:border-gray-600
+                     dark:text-white"
+            >
+  
+              <option value="Active">
+                Active
+              </option>
+  
+              <option value="Inactive">
+                Inactive
+              </option>
+  
+            </select>
+  
+          </div>
+  
+  
+          <!-- Buttons -->
+  
+          <div class="flex gap-3 pt-3">
+  
+            <button
+              type="submit"
+              [disabled]="isSavingItem"
+              class="flex-1 text-white bg-blue-600
+                     hover:bg-blue-700 rounded-lg px-4 py-2
+                     text-sm font-medium disabled:opacity-60"
+            >
+  
+              @if (isSavingItem) {
+  
+                <span
+                  class="flex items-center justify-center gap-2"
+                >
+  
+                  <span
+                    class="w-4 h-4 border-2 border-white/30
+                           border-t-white rounded-full animate-spin"
+                  ></span>
+  
+                  Saving...
+  
+                </span>
+  
+              } @else {
+  
+                {{ editItemId ? 'Update' : 'Add' }}
+  
+              }
+  
+            </button>
+  
+  
+            <button
+              type="button"
+              (click)="onCancel()"
+              class="flex-1 text-gray-700 bg-gray-200
+                     hover:bg-gray-300 rounded-lg px-4 py-2
+                     text-sm font-medium"
+            >
+              Cancel
+            </button>
+  
+          </div>
+  
+        </form>
+  
+      }
+  
+    </ng-template>
+  
+  </div>

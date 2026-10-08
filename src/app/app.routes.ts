@@ -23,6 +23,8 @@ import { AdminLayouts } from './components/layouts/admin-layouts/admin-layouts';
 
 import { adminAuthGuard } from './guards/admin-auth-guard';
 
+import { MenuItems } from './components/menu/menu';
+
 export const routes: Routes = [
   {
     path: '',
@@ -109,6 +111,11 @@ export const routes: Routes = [
       {
         path: 'reports/advance',
         component: SalayAdvanceReport
+      },
+
+      {
+        path: 'menu',
+        component: MenuItems
       }
 
     ]

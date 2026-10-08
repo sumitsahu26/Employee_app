@@ -27,6 +27,8 @@ export class AttendanceReport {
   filterEmployeeid: string | number | null = null;
   filterDate = '';
 
+  isLoadingTableData = false;
+
   constructor() {
     this.getEmployees();
   }
@@ -51,7 +53,7 @@ export class AttendanceReport {
   }
 
   getAttendance() {
-
+    this.isLoadingTableData = true;
     this.http.get<any[]>(this.attendanceApiUrl).subscribe({
       next: (res) => {
 
@@ -73,6 +75,8 @@ export class AttendanceReport {
           ...this.attendanceList
         ];
 
+        this.isLoadingTableData = false;
+
       },
       error: (err) => {
 
@@ -80,6 +84,7 @@ export class AttendanceReport {
 
         this.attendanceList = [];
         this.filteredAttendanceList = [];
+        this.isLoadingTableData = false;
 
       }
     });
@@ -87,7 +92,7 @@ export class AttendanceReport {
   }
 
   filterAttendance() {
-
+    this.isLoadingTableData = true;
     let result = [...this.attendanceList];
 
     // Employee filter
@@ -98,7 +103,7 @@ export class AttendanceReport {
           String(item.employeeid) ===
           String(this.filterEmployeeid)
       );
-
+      this.isLoadingTableData = false;
     }
 
     // Search
@@ -112,6 +117,7 @@ export class AttendanceReport {
           ?.toLowerCase()
           .includes(search)
       );
+      this.isLoadingTableData = false;
 
     }
 
@@ -125,11 +131,12 @@ export class AttendanceReport {
     }
 
     this.filteredAttendanceList = result;
+    this.isLoadingTableData = false;
 
   }
 
   clearFilters() {
-
+    this.isLoadingTableData = true;
     this.searchText = '';
     this.filterEmployeeid = null;
     this.filterDate = '';
@@ -137,7 +144,7 @@ export class AttendanceReport {
     this.filteredAttendanceList = [
       ...this.attendanceList
     ];
-
+    this.isLoadingTableData = false;
   }
 
   downloadExcel() {

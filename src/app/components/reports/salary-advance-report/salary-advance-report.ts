@@ -37,6 +37,8 @@ export class SalayAdvanceReport {
 
   totalTransactions = 0;
 
+  isLoadingTableData = false;
+
   constructor() {
 
     this.getEmployees();
@@ -80,14 +82,12 @@ export class SalayAdvanceReport {
 
 
   getAdvance() {
-
+    this.isLoadingTableData = true;
     this.http
       .get<any[]>(this.advanceApiUrl)
       .subscribe({
 
         next: (res) => {
-
-          // Only ADVANCE records
 
           const advanceTransactions =
             res.filter(
@@ -95,10 +95,6 @@ export class SalayAdvanceReport {
                 item.paymentType === 'ADVANCE'
             );
 
-
-          // --------------------------------
-          // Create Report Data
-          // --------------------------------
 
           this.advanceList =
             advanceTransactions.map(item => {
@@ -143,21 +139,13 @@ export class SalayAdvanceReport {
             });
 
 
-          // --------------------------------
-          // Default List
-          // --------------------------------
-
           this.filteredAdvanceList =
             [
               ...this.advanceList
             ];
 
-
-          // --------------------------------
-          // Calculate Summary
-          // --------------------------------
-
           this.calculateSummary();
+          this.isLoadingTableData = false;
 
         },
 
@@ -173,6 +161,7 @@ export class SalayAdvanceReport {
           this.filteredAdvanceList = [];
 
           this.calculateSummary();
+          this.isLoadingTableData = false;
 
         }
 
@@ -186,11 +175,6 @@ export class SalayAdvanceReport {
       [
         ...this.advanceList
       ];
-
-
-    // --------------------------------
-    // Search Employee
-    // --------------------------------
 
     if (this.searchText.trim()) {
 
@@ -210,11 +194,6 @@ export class SalayAdvanceReport {
 
     }
 
-
-    // --------------------------------
-    // Date Filter
-    // --------------------------------
-
     if (this.filterDate) {
 
       result =
@@ -226,18 +205,8 @@ export class SalayAdvanceReport {
 
     }
 
-
-    // --------------------------------
-    // Update List
-    // --------------------------------
-
     this.filteredAdvanceList =
       result;
-
-
-    // --------------------------------
-    // Update Summary
-    // --------------------------------
 
     this.calculateSummary();
 

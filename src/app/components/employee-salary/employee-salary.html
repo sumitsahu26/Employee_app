@@ -31,6 +31,22 @@
             </tr>
           </thead>
           <tbody>
+            @if (isLoadingTableData) {
+              <tr>
+                <td colspan="9" class="px-6 py-12">
+                  <div class="flex flex-col items-center justify-center">
+                    <!-- Spinner -->
+                    <div
+                      class="w-9 h-9 border-4 border-gray-200 border-t-[#d9ad5b] rounded-full animate-spin"
+                    ></div>
+  
+                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                      Loading Salaries...
+                    </p>
+                  </div>
+                </td>
+              </tr>
+              } @else {
             @for (item of salaryList; track $index) {
             <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
               <td class="px-4 py-2">{{ $index + 1 }}</td>
@@ -52,6 +68,7 @@
               <td colspan="5" class="px-4 py-2 text-center text-gray-400">No salary records</td>
             </tr>
             }
+          }
           </tbody>
         </table>
       </div>
@@ -170,7 +187,9 @@
         (click)="saveSalary()"
         class="flex-1 text-white bg-green-600 hover:bg-green-700 rounded-lg px-4 py-2 text-sm font-medium"
       >
-        Pay Salary
+        @if(isSavingData){
+          Saving...
+        }@else {Pay Salary}
       </button>
 
       <button

@@ -32,6 +32,10 @@ export class EmployeeSalary {
   currentSalary = 0;
   currentMonth: string = new Date().toISOString().slice(0, 7);
 
+  isLoadingTableData = false;
+  isDeletingData = false;
+  isSavingData = false;
+
   salaryList: any[] = [];
 
   constructor() {
@@ -46,6 +50,8 @@ export class EmployeeSalary {
   }
 
   getSalaries() {
+
+    this.isLoadingTableData = true;
     this.http.get<any[]>(this.salaryApiUrl).subscribe(res => {
       this.salaryList = res.map(salary => {
         const employee = this.employeeList.find(d=> d._id === salary.employeeid)
@@ -55,6 +61,7 @@ export class EmployeeSalary {
           employeeSalary: employee?.salary
         }
       })
+      this.isLoadingTableData = false;
     });
   }
 
@@ -222,6 +229,9 @@ export class EmployeeSalary {
       alert('Please generate salary first');
       return;
     }
+
+    this.isSavingData = true;
+
     if (this.editid) {
       // update salary
       const updateSalary = {
@@ -235,6 +245,7 @@ export class EmployeeSalary {
         this.getSalaries();
         this.resetForm();
         this.editid = null;
+        this.isSavingData = false;
       });
   
     } else {
@@ -272,16 +283,18 @@ export class EmployeeSalary {
             next: (ledgerRes) => {
               this.getSalaries();
               this.resetForm();
-      
+              this.isSavingData = false;
             },
             error: (err) => {
               console.error('Error creating salary ledger:', err);
+              this.isSavingData = false;
             }
           });
       
         },
         error: (err) => {
           console.error('Error creating salary:', err);
+          this.isSavingData = false;
         }
       });
     }
@@ -295,8 +308,10 @@ export class EmployeeSalary {
   }
 
   onDelete(_id: any) {
+    this.isDeletingData = true;
     this.http.delete(`${this.salaryApiUrl}/${_id}`).subscribe(() => {
       this.getSalaries();
+      this.isDeletingData = false;
     });
   }
 

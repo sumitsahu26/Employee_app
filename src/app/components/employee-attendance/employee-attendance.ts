@@ -42,6 +42,10 @@ export class EmployeeAttendance {
   filteredAttendanceList: any[] = [];
   filterDate = '';
 
+  isLoadingTableData = false;
+  isDeletingData = false;
+  isSavingData = false;
+
   constructor() {
     this.getEmployees();
     this.getAttendance();
@@ -64,6 +68,7 @@ export class EmployeeAttendance {
 
   // Get attendance records
   getAttendance() {
+    this.isLoadingTableData = true;
     this.http.get<any[]>(this.attendanceApiUrl).subscribe({
       next: (res) => {
   
@@ -79,7 +84,7 @@ export class EmployeeAttendance {
           };
   
         });
-  
+        this.isLoadingTableData = false;
         this.filteredAttendanceList = [...this.attendanceList];
       },
   
@@ -94,6 +99,7 @@ export class EmployeeAttendance {
   filterAttendance() {
 
     let result = [...this.attendanceList];
+    this.isLoadingTableData = true;
   
     // Employee filter
     if (this.filterEmployeeid !== null) {
@@ -101,6 +107,7 @@ export class EmployeeAttendance {
         item =>
           String(item.employeeid) === String(this.filterEmployeeid)
       );
+      this.isLoadingTableData = false;
     }
   
     // Employee search
@@ -110,6 +117,7 @@ export class EmployeeAttendance {
       result = result.filter(item =>
         item.employeeName?.toLowerCase().includes(search)
       );
+      this.isLoadingTableData = false;
     }
   
     // Date filter
@@ -117,6 +125,7 @@ export class EmployeeAttendance {
       result = result.filter(
         item => item.date === this.filterDate
       );
+      this.isLoadingTableData = false;
     }
   
     this.filteredAttendanceList = result;
@@ -148,6 +157,8 @@ export class EmployeeAttendance {
       return;
     }
 
+    this.isSavingData = true;
+
     const attendanceData = {
       employeeid: this.employeeid,
       date: this.date,
@@ -172,9 +183,11 @@ export class EmployeeAttendance {
           next: () => {
             this.getAttendance();
             this.resetForm();
+            this.isSavingData = false;
           },
           error: (err) => {
             console.error('Error updating attendance:', err);
+            this.isSavingData = false;
           }
         });
 
@@ -189,9 +202,11 @@ export class EmployeeAttendance {
           next: () => {
             this.getAttendance();
             this.resetForm();
+            this.isSavingData = false;
           },
           error: (err) => {
             console.error('Error adding attendance:', err);
+            this.isSavingData = false;
           }
         });
 
@@ -221,14 +236,18 @@ export class EmployeeAttendance {
       return;
     }
 
+    this.isDeletingData = true;
+
     this.http
       .delete(`${this.attendanceApiUrl}/${_id}`)
       .subscribe({
         next: () => {
           this.getAttendance();
+          this.isDeletingData = false;
         },
         error: (err) => {
           console.error('Error deleting attendance:', err);
+          this.isDeletingData = false;
         }
       });
   }

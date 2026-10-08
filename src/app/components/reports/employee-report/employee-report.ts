@@ -28,6 +28,8 @@ export class EmployeeReport {
 
   searchText = '';
 
+  isLoadingTableData = false;
+
   constructor() {
     this.getDepartments();
     this.getDesignations();
@@ -50,6 +52,8 @@ export class EmployeeReport {
 
   getEmployees() {
 
+    this.isLoadingTableData = true;
+
     this.http.get<any[]>(this.employeeApiUrl).subscribe({
       next: (res) => {
 
@@ -64,13 +68,15 @@ export class EmployeeReport {
         });
         this.filteredEmployeeList = [...this.employeeList];
 
+        this.isLoadingTableData = false;
+
       },
       error: (err) => {
 
         console.error('Error fetching employees:', err);
         this.employeeList = [];
         this.filteredEmployeeList = [];
-
+        this.isLoadingTableData = false;
       }
     });
 

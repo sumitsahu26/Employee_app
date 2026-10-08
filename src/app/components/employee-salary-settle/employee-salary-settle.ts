@@ -20,6 +20,10 @@ export class EmployeeSalarySettle {
   salaryLedgerApi = `${environment.apiUrl}/salaryLedger`;
 
   employeeList: any[] = [];
+
+  isLoadingTableData = false;
+  isDeletingData = false;
+  isSavingData = false;
   
 
   // form fields
@@ -46,6 +50,7 @@ export class EmployeeSalarySettle {
   }
 
   getSalaries() {
+    this.isLoadingTableData = true;
     this.http.get<any[]>(this.salaryApiUrl).subscribe(res => {
       this.salaryList = res.map(salary => {
         const employee = this.employeeList.find(d => d._id === salary.employeeid)
@@ -55,6 +60,7 @@ export class EmployeeSalarySettle {
           employeeSalary: employee?.salary
         }
       })
+      this.isLoadingTableData = false;
     });
   }
 
@@ -78,6 +84,7 @@ export class EmployeeSalarySettle {
   }
 
   saveSalary() {
+    this.isSavingData = true;
     if (this.editid) {
       // update salary
       const updateSalary = {
@@ -94,6 +101,7 @@ export class EmployeeSalarySettle {
         this.getSalaries();
         this.resetForm();
         this.editid = null;
+        this.isSavingData = false;
       });
 
     } else {
@@ -110,6 +118,7 @@ export class EmployeeSalarySettle {
       this.http.post<any>(this.salaryApiUrl, newSalary).subscribe((res) => {
         this.getSalaries();
         this.resetForm();
+        this.isSavingData = false;
       });
     }
   }
@@ -125,8 +134,10 @@ export class EmployeeSalarySettle {
   }
 
   onDelete(_id: any) {
+    this.isDeletingData = true;
     this.http.delete(`${this.salaryApiUrl}/${_id}`).subscribe(() => {
       this.getSalaries();
+      this.isDeletingData = false;
     });
   }
 

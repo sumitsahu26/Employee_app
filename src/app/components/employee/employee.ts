@@ -32,6 +32,10 @@ export class Employee {
   dateError = '';
   departmentError = '';
   designationError = '';
+
+  isLoadingTableData = false;
+  isDeletingData = false;
+  isSavingData = false;
   
 
   // form fields
@@ -52,6 +56,7 @@ export class Employee {
   }
 
   getEmployees() {
+    this.isLoadingTableData = true;
     this.http.get<any[]>(this.apiUrl).subscribe(res => {
       // Map department and designation names
       this.employeeList = res.map(emp => {
@@ -63,6 +68,7 @@ export class Employee {
           designationName: des?.designationName
         };
       });
+      this.isLoadingTableData = false;
     });
   }
 
@@ -126,6 +132,8 @@ export class Employee {
       return;
     }
 
+    this.isSavingData = true;
+
     const newEmp: any = {
       fullName: this.fullName,
       email: this.email,
@@ -142,11 +150,13 @@ export class Employee {
       this.http.put<any>(`${this.apiUrl}/${this.editid}`, newEmp).subscribe(() => {
         this.getEmployees();
         this.resetForm();
+        this.isSavingData = false;
       });
     } else {
       this.http.post<any>(this.apiUrl, newEmp).subscribe(() => {
         this.getEmployees();
         this.resetForm();
+        this.isSavingData = false;
       });
     }
   }
@@ -169,8 +179,10 @@ export class Employee {
   }
 
   onDelete(_id: number) {
+    this.isDeletingData = true;
     this.http.delete(`${this.apiUrl}/${_id}`).subscribe(() => {
       this.getEmployees();
+      this.isDeletingData = false;
     });
   }
 
