@@ -27,6 +27,10 @@ export class Designation {
   showModal = false;
   departmentError = '';
   designationNameError = '';
+
+  isLoadingTableData = false;
+  isSavingData = false
+  isDeletingData = false
   
   constructor() {
     this.getDepartments();
@@ -39,6 +43,7 @@ export class Designation {
     });
   }
   getDesignations() {
+    this.isLoadingTableData = true
     this.http.get<any[]>(this.apiUrl).subscribe((res) => {
       this.designationList = res.map(designation => {
         const dep = this.departmentList.find(d => d._id === designation.departmentid);
@@ -46,8 +51,9 @@ export class Designation {
           ...designation,
           departmentName: dep ? dep.depName : ''
         };
-      })
+      }) 
     });
+    this.isLoadingTableData = false
   }
   
   saveDesignation(){
@@ -62,6 +68,9 @@ export class Designation {
       this.designationNameError = 'Designation Name is required';
       return;
     }
+
+    this.isSavingData = true;
+
     if(this.editid) {
       const updateDept: any = {
         _id: this.editid,
@@ -72,6 +81,7 @@ export class Designation {
       this.http.put<any>(`${this.apiUrl}/${this.editid}` , updateDept).subscribe((res)=> {
         this.getDesignations();
         this.resetForm();
+        this.isSavingData = false;
       })
     }else {
       const newDes: any = {
@@ -83,6 +93,7 @@ export class Designation {
       this.http.post<any>(this.apiUrl, newDes).subscribe((res)=> {
         this.getDesignations();
         this.resetForm();
+        this.isSavingData = false;
       })
     }
   }
@@ -95,8 +106,10 @@ export class Designation {
   }
   
   onDelete(_id:any) {
+    this.isDeletingData = true;
     this.http.delete(`${this.apiUrl}/${_id}`).subscribe((res)=> {
       this.getDesignations();
+      this.isDeletingData = false;
     })
   }
 
