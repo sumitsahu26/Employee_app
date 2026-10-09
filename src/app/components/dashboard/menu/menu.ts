@@ -2,7 +2,11 @@ import {
   AfterViewInit,
   Component,
   OnDestroy,
-  OnInit
+  OnInit,
+  ElementRef,
+  ViewChild,
+  ViewChildren,
+  QueryList
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -72,6 +76,12 @@ interface ApiMenuItem {
 })
 export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild('categoryContainer')
+categoryContainer!: ElementRef<HTMLDivElement>;
+
+@ViewChildren('categoryButton')
+categoryButtons!: QueryList<ElementRef<HTMLButtonElement>>;
+
   // API URL
 
   categoryApiUrl = `${environment.apiUrl}/menuCategories`;
@@ -117,6 +127,19 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  scrollActiveCategoryIntoView(): void {
+    const activeButton = this.categoryButtons?.find(
+      button =>
+        button.nativeElement.dataset['category'] ===
+        this.selectedCategory
+    );
+  
+    activeButton?.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest'
+    });
+  }
 
   // GET MENU DATA
 
@@ -133,15 +156,11 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
         next: (categories) => {
 
-          console.log('Categories:', categories);
-
           // Get Items
           this.http.get<ApiMenuItem[]>(this.itemApiUrl)
             .subscribe({
 
               next: (items) => {
-
-                console.log('Menu Items:', items);
 
                 this.buildMenu(categories, items);
 
@@ -347,6 +366,9 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
     this.selectedCategory = category;
 
+  // Scroll the category bar to the active button
+  this.scrollActiveCategoryIntoView();
+
 
     setTimeout(() => {
 
@@ -384,90 +406,67 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
 
   setupCategoryObserver(): void {
-
-    // Disconnect previous observer
     if (this.observer) {
-
       this.observer.disconnect();
-
     }
-
-
-    this.observer =
-      new IntersectionObserver(
-
-        entries => {
-
-          const visibleSections =
-            entries
-
-              .filter(
-                entry =>
-                  entry.isIntersecting
-              )
-
-              .sort(
-                (a, b) =>
-                  a.boundingClientRect.top -
-                  b.boundingClientRect.top
-              );
-
-
-          if (
-            visibleSections.length > 0
-          ) {
-
-            const id =
-              visibleSections[0]
-                .target
-                .id;
-
-
-            const category =
-              id.replace(
-                'category-',
-                ''
-              );
-
-
-            this.selectedCategory =
-              category;
-
-          }
-
-        },
-
-        {
-
-          root: null,
-
-          threshold: 0.15,
-
-          rootMargin:
-            '-120px 0px -50% 0px'
-
-        }
-
-      );
-
-
-    setTimeout(() => {
-
-      document
-        .querySelectorAll(
-          '[id^="category-"]'
+  
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            '[id^="category-"]'
+          )
         )
-
-        .forEach(section => {
-
-          this.observer.observe(
-            section
+          .map((section) => ({
+            section,
+            rect: section.getBoundingClientRect()
+          }))
+          .filter(({ rect }) =>
+            rect.bottom > 0 &&
+            rect.top < window.innerHeight
           );
-
+  
+        if (visibleSections.length === 0) {
+          return;
+        }
+  
+        // Choose the section nearest the top of the viewport,
+        // accounting for the fixed navbar and sticky category bar.
+        const activationLine = 180;
+  
+        visibleSections.sort((a, b) => {
+          const distanceA =
+            Math.abs(a.rect.top - activationLine);
+  
+          const distanceB =
+            Math.abs(b.rect.top - activationLine);
+  
+          return distanceA - distanceB;
         });
-
-    }, 100);
-
+  
+        const activeSection = visibleSections[0].section;
+  
+        const category = activeSection.id.replace(
+          'category-',
+          ''
+        );
+  
+        if (this.selectedCategory !== category) {
+          this.selectedCategory = category;
+          this.scrollActiveCategoryIntoView();
+        }
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px 0px 0px 0px'
+      }
+    );
+  
+    document
+      .querySelectorAll<HTMLElement>('[id^="category-"]')
+      .forEach((section) => {
+        this.observer.observe(section);
+      });
   }
 
 

@@ -12,7 +12,7 @@
       </p>
     </div>
   </section>
-  <section class="py-10 md:py-16">
+  <section class="py-10 md:py-2">
     <!-- Custom Menu Loader -->
     @if(isMenuLoading){
     <div class="flex flex-col items-center justify-center py-20">
@@ -65,20 +65,25 @@
         <!-- CATEGORY BUTTONS -->
 
         <div class="sticky top-0 z-30 bg-[#f8f5ef]/95 backdrop-blur-md py-1">
-          <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-            <button
-              *ngFor="let category of categories"
-              (click)="selectCategory(category.name)"
-              class="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold transition duration-300"
-              [ngClass]="
-                selectedCategory === category.name
-                  ? 'bg-[#17130f] text-[#d9ad5b] shadow-md'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-[#d9ad5b]'
-              "
-            >
-              {{ category.name }}
-            </button>
-          </div>
+          <div
+          #categoryContainer
+          class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide scroll-smooth"
+        >
+          <button
+            #categoryButton
+            *ngFor="let category of categories"
+            [attr.data-category]="category.name"
+            (click)="selectCategory(category.name)"
+            class="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold transition duration-300"
+            [ngClass]="
+              selectedCategory === category.name
+                ? 'bg-[#17130f] text-[#d9ad5b] shadow-md'
+                : 'bg-white text-gray-600 border border-gray-200 hover:border-[#d9ad5b]'
+            "
+          >
+            {{ category.name }}
+          </button>
+        </div>
         </div>
       </div>
 
