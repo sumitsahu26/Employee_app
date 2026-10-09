@@ -18,7 +18,7 @@
 
     <!-- DESKTOP MENU -->
     <div class="hidden md:flex items-center gap-8">
-      <a routerLink="/home" class="text-white hover:text-[#d9ad5b] transition duration-300">
+      <a routerLink="/" class="text-white hover:text-[#d9ad5b] transition duration-300">
         Home
       </a>
 
@@ -56,7 +56,7 @@
   <div *ngIf="isMenuOpen" class="md:hidden bg-[#17130f] border-t border-white/10">
     <div class="px-6 py-5 space-y-4">
       <a
-        routerLink="/home"
+        routerLink="/"
         (click)="isMenuOpen = false"
         class="block text-white hover:text-[#d9ad5b]"
       >
