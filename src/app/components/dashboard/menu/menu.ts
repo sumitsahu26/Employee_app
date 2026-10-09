@@ -72,18 +72,14 @@ interface ApiMenuItem {
 })
 export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
-  // =====================================================
   // API URL
-  // =====================================================
 
   categoryApiUrl = `${environment.apiUrl}/menuCategories`;
 
   itemApiUrl = `${environment.apiUrl}/menuItems`;
 
 
-  // =====================================================
   // MENU DATA
-  // =====================================================
 
   categories: MenuCategory[] = [];
 
@@ -92,34 +88,28 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   searchText = '';
 
 
-  // =====================================================
   // LOADING
-  // =====================================================
 
   isLoading = false;
+
+  isMenuLoading: boolean = true;
 
   errorMessage = '';
 
 
-  // =====================================================
   // INTERSECTION OBSERVER
-  // =====================================================
 
   private observer!: IntersectionObserver;
 
 
-  // =====================================================
   // CONSTRUCTOR
-  // =====================================================
 
   constructor(
     private http: HttpClient
   ) {}
 
 
-  // =====================================================
   // INIT
-  // =====================================================
 
   ngOnInit(): void {
 
@@ -128,13 +118,11 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // GET MENU DATA
-  // =====================================================
 
   getMenuData(): void {
 
-    this.isLoading = true;
+    this.isMenuLoading = true;
 
     this.errorMessage = '';
 
@@ -157,7 +145,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
                 this.buildMenu(categories, items);
 
-                this.isLoading = false;
+                this.isMenuLoading = false;
 
                 // Reinitialize observer after API data
                 setTimeout(() => {
@@ -178,7 +166,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
                 this.errorMessage =
                   'Unable to load menu items.';
 
-                this.isLoading = false;
+                this.isMenuLoading = false;
 
               }
 
@@ -196,7 +184,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
           this.errorMessage =
             'Unable to load menu categories.';
 
-          this.isLoading = false;
+          this.isMenuLoading = false;
 
         }
 
@@ -205,9 +193,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // BUILD MENU
-  // =====================================================
 
   buildMenu(
     categories: MenuCategory[],
@@ -288,9 +274,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // SEARCH
-  // =====================================================
 
   get filteredCategories(): MenuCategory[] {
 
@@ -339,9 +323,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // HALF / FULL PRICE CHECK
-  // =====================================================
 
   hasHalfFullPrices(
     category: MenuCategory
@@ -359,9 +341,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // CATEGORY CLICK
-  // =====================================================
 
   selectCategory(category: string): void {
 
@@ -393,9 +373,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // INTERSECTION OBSERVER
-  // =====================================================
 
   ngAfterViewInit(): void {
 
@@ -493,9 +471,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // REFRESH MENU
-  // =====================================================
 
   refreshMenu(): void {
 
@@ -504,9 +480,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // =====================================================
   // CLEANUP
-  // =====================================================
 
   ngOnDestroy(): void {
 
