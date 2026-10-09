@@ -8,9 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment.development';
 
 
-// ============================================================
 // INTERFACES
-// ============================================================
 
 interface MenuCategory {
   _id?: string;
@@ -34,9 +32,7 @@ interface MenuItem {
 }
 
 
-// ============================================================
 // COMPONENT
-// ============================================================
 
 @Component({
   selector: 'app-menu',
@@ -93,25 +89,19 @@ export class MenuItems implements OnInit, OnDestroy {
   itemStatus: 'Active' | 'Inactive' = 'Active';
 
 
-  // ==========================================================
   // ERROR
-  // ==========================================================
 
   errorMessage = '';
 
 
-  // ==========================================================
   // CONSTRUCTOR
-  // ==========================================================
 
   constructor(
     private http: HttpClient
   ) {}
 
 
-  // ==========================================================
   // ON INIT
-  // ==========================================================
 
   ngOnInit(): void {
 
@@ -120,9 +110,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // GET COMPLETE MENU DATA
-  // ==========================================================
 
   getMenuData(): void {
 
@@ -254,9 +242,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // FILTERED CATEGORIES
-  // ==========================================================
 
   get filteredCategories(): MenuCategory[] {
 
@@ -285,9 +271,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // SELECTED CATEGORY ITEMS
-  // ==========================================================
 
   get selectedCategoryItems(): MenuItem[] {
 
@@ -306,9 +290,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // FILTERED ITEMS
-  // ==========================================================
 
   get filteredItems(): MenuItem[] {
 
@@ -344,9 +326,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // SELECT CATEGORY
-  // ==========================================================
 
   selectCategory(
     category: MenuCategory
@@ -361,9 +341,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // GET ITEM COUNT
-  // ==========================================================
 
   getItemCount(
     categoryId?: string
@@ -383,9 +361,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // ADD CATEGORY
-  // ==========================================================
 
   onAddCategory(): void {
 
@@ -406,9 +382,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // EDIT CATEGORY
-  // ==========================================================
 
   onEditCategory(
     category: MenuCategory
@@ -435,9 +409,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // SAVE CATEGORY
-  // ==========================================================
 
   saveCategory(): void {
 
@@ -611,9 +583,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // CATEGORY SORT ORDER
-  // ==========================================================
 
   getCategorySortOrder(): number {
 
@@ -630,9 +600,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // DELETE CATEGORY
-  // ==========================================================
 
   onDeleteCategory(
     categoryId?: string
@@ -720,9 +688,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // ADD MENU ITEM
-  // ==========================================================
 
   onAddItem(): void {
 
@@ -760,9 +726,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // EDIT MENU ITEM
-  // ==========================================================
 
   onEditItem(
     item: MenuItem
@@ -801,9 +765,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // SAVE MENU ITEM
-  // ==========================================================
 
   saveItem(): void {
 
@@ -922,7 +884,6 @@ export class MenuItems implements OnInit, OnDestroy {
 
       };
 
-
       this.http
         .put(
           `${this.itemApiUrl}/${this.editItemId}`,
@@ -1034,9 +995,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // DELETE MENU ITEM
-  // ==========================================================
 
   onDeleteItem(
     itemId?: string
@@ -1099,9 +1058,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // CANCEL
-  // ==========================================================
 
   onCancel(): void {
 
@@ -1112,9 +1069,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // RESET FORM
-  // ==========================================================
 
   resetForm(): void {
 
@@ -1142,9 +1097,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // REFRESH
-  // ==========================================================
 
   refreshMenu(): void {
 
@@ -1153,9 +1106,7 @@ export class MenuItems implements OnInit, OnDestroy {
   }
 
 
-  // ==========================================================
   // DESTROY
-  // ==========================================================
 
   ngOnDestroy(): void {
 
